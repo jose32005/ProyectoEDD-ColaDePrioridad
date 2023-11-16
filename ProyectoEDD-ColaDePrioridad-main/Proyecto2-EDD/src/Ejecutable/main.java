@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package Ejecutable;
-
+import java.util.Timer;
+import javax.swing.JOptionPane;
 /**
  *
  * @author joses
@@ -15,15 +16,15 @@ public class main {
      */
     public static void main(String[] args) {
         
-        long inicio = System.nanoTime();
+        int inicio = (int) (System.nanoTime()/1000000000);
         System.out.println("Hola mundo"); 
         
-      
         System.out.println("Tiempo transcurrido: ");
         
-        long ultimo = System.nanoTime();
+        int ultimo = (int) (System.nanoTime()/1000000000);
         
-        double total = ultimo - inicio / 1_000_000_000.0;
+        int total = (ultimo - inicio);
+              
         
         System.out.println(total);
    }

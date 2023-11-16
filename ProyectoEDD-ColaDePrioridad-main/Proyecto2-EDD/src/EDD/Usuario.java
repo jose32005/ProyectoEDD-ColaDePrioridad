@@ -11,10 +11,17 @@ package EDD;
 public class Usuario {
     private String nombre;
     private String tipo;
+    private Documento pPrim;
+    private int iN;
+    private Usuario pSig;
     
     public Usuario(String nombre, String tipo){
         this.nombre = nombre;
         this.tipo = tipo;
-        
+        this.pPrim = null;
+        this.iN = 0;
+        this.pSig = null;
+      
     }
+   
 }
