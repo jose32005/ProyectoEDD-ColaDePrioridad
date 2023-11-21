@@ -24,16 +24,4 @@ public class Documento {
         this.tiempo = -1;
                 
     }
-    
-    public Documento getpSig() {
-        return pSig;
-    }
-    
-    public void setpSig(Documento pSig) {
-        this.pSig = pSig;
-    }
-    
-    public String gettInfo() {
-        return nombre;
-    }
 }

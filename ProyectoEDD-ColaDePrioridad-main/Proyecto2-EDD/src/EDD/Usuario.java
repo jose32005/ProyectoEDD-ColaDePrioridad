@@ -23,54 +23,75 @@ public class Usuario {
         this.pSig = null;
       
     }
-   
-    public boolean esVacio() {
-        return this.pPrim == null;
-}
-    public Documento primero() {
+
+    /**
+     * @return the nombre
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * @param nombre the nombre to set
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    /**
+     * @return the tipo
+     */
+    public String getTipo() {
+        return tipo;
+    }
+
+    /**
+     * @param tipo the tipo to set
+     */
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    /**
+     * @return the pPrim
+     */
+    public Documento getpPrim() {
         return pPrim;
     }
-    
-    public void proximo(Documento pValor) {
-        if (pValor != null && pValor.getpSig() != null) {
-            pValor = pValor.getpSig();
-        }
-    }
-    
-    public void insertar(String nombre, int tamaño, String tipo) {
-        Documento nuevoDocumento = new Documento(nombre, tamaño, tipo);
-        if (this.esVacio()) {
-            this.pPrim = nuevoDocumento;
-        } else {
-            Documento pAux = this.pPrim;
-            while (pAux.getpSig() != null) {
-                pAux = pAux.getpSig();
-            }
-            pAux.setpSig(nuevoDocumento);
-        }
-        this.iN++;
-    }
-    
-    public void eliminar(Documento elemento) {
-        if (pPrim == null || elemento == null) {
-            return;
-        }
 
-        if (pPrim.gettInfo().equals(elemento)) {
-            pPrim = pPrim.getpSig();
-            iN--;
-            return;
-        }
-
-        Documento actual = pPrim;
-        while (actual.getpSig() != null && !actual.getpSig().gettInfo().equals(elemento)) {
-            actual = actual.getpSig();
-        }
-
-        if (actual.getpSig() != null) {
-            actual.setpSig(actual.getpSig().getpSig());
-            iN--;
-        }
+    /**
+     * @param pPrim the pPrim to set
+     */
+    public void setpPrim(Documento pPrim) {
+        this.pPrim = pPrim;
     }
-    
+
+    /**
+     * @return the iN
+     */
+    public int getiN() {
+        return iN;
+    }
+
+    /**
+     * @param iN the iN to set
+     */
+    public void setiN(int iN) {
+        this.iN = iN;
+    }
+
+    /**
+     * @return the pSig
+     */
+    public Usuario getpSig() {
+        return pSig;
+    }
+
+    /**
+     * @param pSig the pSig to set
+     */
+    public void setpSig(Usuario pSig) {
+        this.pSig = pSig;
+    }
+   
 }
