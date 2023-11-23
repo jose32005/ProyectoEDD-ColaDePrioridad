@@ -9,19 +9,78 @@ package EDD;
  * @author joses
  */
 public class Usuario {
+
     private String nombre;
     private String tipo;
     private Documento pPrim;
     private int iN;
     private Usuario pSig;
-    
-    public Usuario(String nombre, String tipo){
+
+    public Usuario(String nombre, String tipo) {
         this.nombre = nombre;
         this.tipo = tipo;
         this.pPrim = null;
         this.iN = 0;
         this.pSig = null;
-      
+
+    }
+
+    public boolean esVacio() {
+        return this.getpPrim() == null;
+    }
+
+    public Documento primerDocumento() {
+        return getpPrim();
+    }
+
+    public void proximoDocumento(Documento pValor) {
+        if (pValor != null && pValor.getpSig() != null) {
+            pValor = pValor.getpSig();
+        }
+    }
+
+    public void insertarDocumento(String nombre, int tamaño, String tipo) {
+        Documento nuevoDocumento = new Documento(nombre, tamaño, tipo);
+        if (this.esVacio()) {
+            this.setpPrim(nuevoDocumento);
+        } else {
+            Documento pAux = this.getpPrim();
+            while (pAux.getpSig() != null) {
+                pAux = pAux.getpSig();
+            }
+            pAux.setpSig(nuevoDocumento);
+        }
+        this.setiN(this.getiN() + 1);
+    }
+
+    public void eliminarDocumento(String nombreDoc) {
+        if (getpPrim() == null || nombreDoc == null) {
+            return;
+        }
+
+        if (getpPrim().getNombre().equals(nombreDoc)) {
+            if (getpPrim().getTiempo() != -1) {
+                setpPrim(getpPrim().getpSig());
+                setiN(getiN() - 1);
+            }
+            return;
+
+        }
+
+        Documento actual = getpPrim();
+
+        if (getpPrim().getNombre().equals(nombreDoc)) {
+            while (actual.getpSig() != null && !actual.getpSig().getNombre().equals(nombreDoc)) {
+                actual = actual.getpSig();
+            }
+
+            if (actual.getpSig() != null) {
+                actual.setpSig(actual.getpSig().getpSig());
+                setiN(getiN() - 1);
+            }
+
+        }
+
     }
 
     /**
@@ -93,5 +152,5 @@ public class Usuario {
     public void setpSig(Usuario pSig) {
         this.pSig = pSig;
     }
-   
+
 }

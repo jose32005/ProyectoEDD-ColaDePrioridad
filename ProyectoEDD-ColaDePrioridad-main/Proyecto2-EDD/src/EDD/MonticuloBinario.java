@@ -10,18 +10,20 @@ package EDD;
  */
 public class MonticuloBinario {
 
-    private int[] monticulo;
+    private Documento[] monticulo;
     private int capacidad;
     private int tamaño;
+    private int tInicial;
 
-    public MonticuloBinario (int capacidad) {
-        this.capacidad = capacidad;
+    public MonticuloBinario() {
+        this.capacidad = 31;
         this.tamaño = 0;
-        this.monticulo = new int[capacidad];
+        this.monticulo = new Documento[31];
+        this.tInicial = (int) (System.nanoTime() / 1000000000);
     }
 
     public int obtenerPadre(int i) {
-        return (i - 1) / 2;
+        return (int) Math.floor((i - 1) / 2);
     }
 
     public int obtenerHijoIzquierdo(int i) {
@@ -33,33 +35,32 @@ public class MonticuloBinario {
     }
 
     public void intercambiar(int i, int j) {
-        int temp = monticulo[i];
+        Documento temp = monticulo[i];
         monticulo[i] = monticulo[j];
         monticulo[j] = temp;
     }
 
-    public void insertar(int elemento) {
+    public void insertar(Documento doc, Usuario usuario) {
         if (tamaño >= capacidad) {
             System.out.println("El montículo está lleno, no se puede insertar.");
             return;
         }
 
-        monticulo[tamaño] = elemento;
+        this.generarEtiquetaTiempo(doc, usuario);
+        monticulo[tamaño] = doc;
         int indice = tamaño;
         tamaño++;
 
-        while (indice > 0 && monticulo[indice] < monticulo[obtenerPadre(indice)]) {
+        while ((indice > 0) && (monticulo[indice].getTiempo() < monticulo[obtenerPadre(indice)].getTiempo())) {
             intercambiar(indice, obtenerPadre(indice));
             indice = obtenerPadre(indice);
         }
     }
 
-    public int eliminarMinimo() {
-        if (tamaño <= 0) {
-            throw new IllegalStateException("El montículo está vacío, no se puede eliminar el mínimo.");
-        }
+    public Documento eliminarMinimo() {
 
-        int minimo = monticulo[0];
+        Documento minimo = monticulo[0];
+        minimo.setTiempo(-1);
         monticulo[0] = monticulo[tamaño - 1];
         tamaño--;
         Orden(0);
@@ -72,11 +73,11 @@ public class MonticuloBinario {
         int izquierdo = obtenerHijoIzquierdo(indice);
         int derecho = obtenerHijoDerecho(indice);
 
-        if (izquierdo < tamaño && monticulo[izquierdo] < monticulo[indiceMinimo]) {
+        if (izquierdo < tamaño && monticulo[izquierdo].getTiempo() < monticulo[indiceMinimo].getTiempo()) {
             indiceMinimo = izquierdo;
         }
 
-        if (derecho < tamaño && monticulo[derecho] < monticulo[indiceMinimo]) {
+        if (derecho < tamaño && monticulo[derecho].getTiempo() < monticulo[indiceMinimo].getTiempo()) {
             indiceMinimo = derecho;
         }
 
@@ -92,8 +93,39 @@ public class MonticuloBinario {
 
     public void imprimirMonticulo() {
         for (int i = 0; i < tamaño; i++) {
-            System.out.print(monticulo[i] + " ");
+            System.out.print(monticulo[i].getNombre() + " " + monticulo[i].getTiempo() + " ");
         }
         System.out.println();
+    }
+
+    public void generarEtiquetaTiempo(Documento doc, Usuario usuario) {
+        int tActual = (int) (System.nanoTime() / 1000000000);
+        int etiqueta = tActual - this.tInicial;
+        if (usuario.getTipo().equals("prioridad_alta")) {
+            etiqueta = (int) etiqueta / 3;
+        } else if (usuario.getTipo().equals("prioridad_media")) {
+            etiqueta = (int) etiqueta / 2;
+        }
+        doc.setTiempo(etiqueta);
+    }
+
+    public void cancelarImpresion(Documento doc) {
+        if (doc.getTiempo() != -1) {
+            doc.setTiempo(0);
+            this.Orden(0);
+            this.eliminarMinimo();
+        } else {
+            System.out.println("El documento no esta en cola");
+        }
+    }
+
+    public void imprimirDocumento() { //Liberar Impresora
+        if (tamaño <= 0) {
+            System.out.println("El montículo está vacío, no se puede eliminar el mínimo.");
+        } else {
+            Documento doc = this.eliminarMinimo();
+            System.out.println("Documento impreso: " + doc.getNombre());
+        }
+
     }
 }
