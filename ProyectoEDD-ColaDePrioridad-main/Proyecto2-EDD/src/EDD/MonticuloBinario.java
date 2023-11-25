@@ -129,7 +129,7 @@ public class MonticuloBinario {
 
             graph.getModel().beginUpdate();
             try {
-                dibujarMonticulo(graph, parent, 300, 100, 30, 30);
+                dibujarMonticulo(graph, parent, 600, 100, 30, 30);
             } finally {
                 graph.getModel().endUpdate();
             }
@@ -163,7 +163,7 @@ public class MonticuloBinario {
         Object[] vertices = new Object[tamaño];
 
         int anchoVentana = 900; 
-        int anchoMonticulo = tamaño * (ancho * 4); 
+        int anchoMonticulo = tamaño * (ancho * 2); 
 
         int ajusteX = (anchoVentana - anchoMonticulo) / 2;
 
@@ -187,6 +187,7 @@ public class MonticuloBinario {
                 } else {
                     // El nodo actual es el hijo derecho del padre
                     int anchoPadre = (int) graph.getCellGeometry(vertices[padreIndice]).getWidth();
+                    ajusteX /= 2;
                     actualX = ejeXPadre - anchoPadre + ancho * 2 + ajusteX;
                 }
                 actualY = y + nivel * yOffset;
@@ -197,7 +198,7 @@ public class MonticuloBinario {
 
             if (i != 0) {
                 int padreIndice = obtenerPadre(i);
-                graph.insertEdge(parent, null, "", vertices[padreIndice], vertices[i], "endArrow=none;startArrow=none");
+                graph.insertEdge(parent, null, "", vertices[padreIndice], vertices[i], "startArrow=none");
             }
 
             if (i == Math.pow(2, nivel) - 2) {
@@ -205,7 +206,6 @@ public class MonticuloBinario {
             }
         }
     }
-
 
     public void cancelarImpresion(Documento doc) {
         if (doc.getTiempo() != -1) {
