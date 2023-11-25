@@ -3,7 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package EDD;
-
+import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.view.mxGraph;
+import java.awt.event.MouseEvent;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 /**
  *
  * @author joses
