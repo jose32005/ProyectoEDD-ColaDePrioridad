@@ -108,6 +108,100 @@ public class MonticuloBinario {
         }
         doc.setTiempo(etiqueta);
     }
+    public void visualizarMonticulo() {
+        SwingUtilities.invokeLater(() -> {
+            mxGraph graph = new mxGraph() {
+                // Desactivar la interacción del ratón
+                public boolean isCellMovable(Object cell) {
+                    return true;
+                }
+
+                public boolean isCellConnectable(Object cell) {
+                    return false;
+                }
+
+            };
+            Object parent = graph.getDefaultParent();
+
+            graph.getModel().beginUpdate();
+            try {
+                dibujarMonticulo(graph, parent, 300, 100, 30, 30);
+            } finally {
+                graph.getModel().endUpdate();
+            }
+
+            mxGraphComponent graphComponent = new mxGraphComponent(graph) {
+                // Desactivar la interacción del ratón
+                public boolean isForceMarqueeEvent(MouseEvent e) {
+                    return false;
+                }
+            };
+            JFrame frame = new JFrame("Visualizador de Montículo Binario");
+            frame.getContentPane().add(graphComponent);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            // Ajustes para el tamaño de la ventana
+            frame.setSize(900, 900);
+            frame.setLocationRelativeTo(null);  // Centrar en la pantalla
+
+            frame.setVisible(true);
+        }
+        );
+    }
+
+    private void dibujarMonticulo(mxGraph graph, Object parent, int x, int y, int ancho, int alto) {
+        graph.setCellsSelectable(true);
+        graph.setConnectableEdges(false);
+        int nivel = 1;
+        int nivelAnterior = 0;
+        int yOffset = alto * 2;
+
+        Object[] vertices = new Object[tamaño];
+
+        int anchoVentana = 900; 
+        int anchoMonticulo = tamaño * (ancho * 4); 
+
+        int ajusteX = (anchoVentana - anchoMonticulo) / 2;
+
+        for (int i = 0; i < tamaño; i++) {
+            int actualX;
+            int actualY;
+
+            if (i == 0) {
+                actualX = x + ajusteX;
+                actualY = y;
+            } else {
+                if (nivel != nivelAnterior) {
+                    nivelAnterior = nivel;
+                }
+                int padreIndice = obtenerPadre(i);
+                int ejeXPadre = (int) graph.getCellGeometry(vertices[padreIndice]).getCenterX();
+
+                if (obtenerHijoIzquierdo(padreIndice) == i) {
+                    // El nodo actual es el hijo izquierdo del padre
+                    actualX = ejeXPadre - ancho * 2 - ajusteX;
+                } else {
+                    // El nodo actual es el hijo derecho del padre
+                    int anchoPadre = (int) graph.getCellGeometry(vertices[padreIndice]).getWidth();
+                    actualX = ejeXPadre - anchoPadre + ancho * 2 + ajusteX;
+                }
+                actualY = y + nivel * yOffset;
+                
+            }
+
+            vertices[i] = graph.insertVertex(parent, null, monticulo[i].getNombre(),actualX, actualY, ancho, alto);
+
+            if (i != 0) {
+                int padreIndice = obtenerPadre(i);
+                graph.insertEdge(parent, null, "", vertices[padreIndice], vertices[i], "endArrow=none;startArrow=none");
+            }
+
+            if (i == Math.pow(2, nivel) - 2) {
+                nivel++;
+            }
+        }
+    }
+
 
     public void cancelarImpresion(Documento doc) {
         if (doc.getTiempo() != -1) {
