@@ -8,6 +8,7 @@ import EDD.HashTable;
 import EDD.MonticuloBinario;
 import EDD.Usuario;
 import Extras.Funciones;
+import Interfaces.Ventana1;
 import java.io.IOException;
 
 /**
@@ -33,15 +34,21 @@ public class main {
         monticulo.insertar(nuevo_hash.buscarUsuario("angelo").getpPrim(), nuevo_hash.buscarUsuario("angelo"));
         monticulo.insertar(nuevo_hash.buscarUsuario("angelo").getpPrim().getpSig(), nuevo_hash.buscarUsuario("angelo"));
         monticulo.insertar(nuevo_hash.buscarUsuario("angelo").getpPrim().getpSig().getpSig(), nuevo_hash.buscarUsuario("angelo"));
+        monticulo.insertar(nuevo_hash.buscarUsuario("angelo").getpPrim().getpSig().getpSig().getpSig(), nuevo_hash.buscarUsuario("angelo"));
+        monticulo.insertar(nuevo_hash.buscarUsuario("angelo").getpPrim().getpSig().getpSig().getpSig().getpSig(), nuevo_hash.buscarUsuario("angelo"));
+        monticulo.insertar(nuevo_hash.buscarUsuario("angelo").getpPrim().getpSig().getpSig().getpSig().getpSig().getpSig(), nuevo_hash.buscarUsuario("angelo"));
+        monticulo.insertar(nuevo_hash.buscarUsuario("angelo").getpPrim().getpSig().getpSig().getpSig().getpSig().getpSig().getpSig(), nuevo_hash.buscarUsuario("angelo"));
         nuevo_hash.buscarUsuario("angelo").getpPrim().setTiempo(9);
         monticulo.imprimirMonticulo();
-        monticulo.cancelarImpresion(nuevo_hash.buscarUsuario("angelo").getpPrim().getpSig());
+        //monticulo.cancelarImpresion(nuevo_hash.buscarUsuario("angelo").getpPrim().getpSig());
         monticulo.imprimirMonticulo();
-        monticulo.imprimirDocumento();
+        //monticulo.imprimirDocumento();
         monticulo.imprimirMonticulo();
-        monticulo.imprimirDocumento();
-        monticulo.cancelarImpresion(nuevo_hash.buscarUsuario("angelo").getpPrim().getpSig());
-        monticulo.imprimirDocumento();
-        
+        //monticulo.imprimirDocumento();
+        //monticulo.cancelarImpresion(nuevo_hash.buscarUsuario("angelo").getpPrim().getpSig());
+        //monticulo.imprimirDocumento();
+        //monticulo.visualizarMonticulo();
+        Ventana1 ventana = new Ventana1();
+        ventana.setVisible(true);
     }
 }

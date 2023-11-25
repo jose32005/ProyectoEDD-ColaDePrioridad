@@ -129,7 +129,7 @@ public class MonticuloBinario {
 
             graph.getModel().beginUpdate();
             try {
-                dibujarMonticulo(graph, parent, 600, 100, 30, 30);
+                dibujarMonticulo(graph, parent, 270, 100, 30, 30);
             } finally {
                 graph.getModel().endUpdate();
             }
