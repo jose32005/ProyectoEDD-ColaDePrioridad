@@ -347,7 +347,6 @@ public class MonticuloBinario {
     * Muestra en una nueva ventana la cola de impresion
     * como estructura lineal
     *
-    * @param indice Índice del nodo actual en el montículo.
     * @author S. Estefania, G. Angelo y S. Jose
     */
     public void visualizarGrafo() {
