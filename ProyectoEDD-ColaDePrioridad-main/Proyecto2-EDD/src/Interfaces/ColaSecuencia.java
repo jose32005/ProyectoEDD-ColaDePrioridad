@@ -6,7 +6,7 @@ package Interfaces;
 
 /**
  *
- * @author evaas
+ * @author S. Estefania, G. Angelo y S. Jose
  */
 public class ColaSecuencia extends javax.swing.JFrame {
 
