@@ -9,14 +9,18 @@ import Ejecutable.main;
 
 /**
  *
- * @author evaas
+ * @author S. Estefania, G. Angelo y S. Jose
  */
 public class EliminarUsuario extends javax.swing.JFrame {
 
     /**
-     * Creates new form EliminarUsuario
-     */
-    
+    * Constructor de la interfaz gráfica para eliminar usuarios. Inicializa los componentes,
+    * establece la ubicación relativa al centro de la pantalla y carga la lista de usuarios
+    * disponibles en el desplegable de selección. Si la tabla hash de usuarios está vacía,
+    * imprime un mensaje indicando que la base de usuarios está vacía.
+    *
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     public EliminarUsuario() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -99,12 +103,25 @@ public class EliminarUsuario extends javax.swing.JFrame {
         
     
     }//GEN-LAST:event_jComboBox1ActionPerformed
-
+    
+    /**
+    * Acción realizada al presionar el botón "cerrar" en la interfaz de usuario.
+    *
+    * @param evt El evento de acción que desencadenó esta acción.
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
         main.ventana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_CancelarActionPerformed
 
+    /**
+    * Maneja el evento de eliminación de usuario. Invoca el método `EliminarUsuario` de la
+    * tabla hash de usuarios, pasando el nombre del usuario seleccionado en el desplegable.
+    * Luego, hace visible la ventana principal y cierra la ventana actual.
+    *
+    * @param evt Objeto ActionEvent que representa el evento de eliminación.
+    */
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
         main.hashtable.EliminarUsuario(jComboBox1.getSelectedItem().toString());
         main.ventana.setVisible(true);
