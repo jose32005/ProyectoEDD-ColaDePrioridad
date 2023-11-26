@@ -4,6 +4,10 @@
  */
 package Interfaces;
 
+import EDD.Documento;
+import EDD.Usuario;
+import Ejecutable.main;
+
 /**
  *
  * @author evaas
@@ -16,6 +20,20 @@ public class EliminarDocumento extends javax.swing.JFrame {
     public EliminarDocumento() {
         initComponents();
         this.setLocationRelativeTo(null);
+        if (main.hashtable.getTamaño() == 0) {
+            System.out.println("La base de usuarios esta vacia");
+        } else {
+            for (int i = 0; i < main.hashtable.getTamaño(); i++) {
+                if (main.hashtable.arreglo[i] != null) {
+                    this.Usuarios.addItem(main.hashtable.arreglo[i].getNombre());
+                    Usuario aux = main.hashtable.arreglo[i].getpSig();
+                    while (aux != null) {
+                        this.Usuarios.addItem(aux.getNombre());
+                        aux = aux.getpSig();
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -35,6 +53,7 @@ public class EliminarDocumento extends javax.swing.JFrame {
         Documentos = new javax.swing.JComboBox<>();
         Cancelar = new javax.swing.JButton();
         Eliminar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -45,19 +64,29 @@ public class EliminarDocumento extends javax.swing.JFrame {
 
         Titulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         Titulo.setText("Eliminar Documento");
-        jPanel1.add(Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, -1, -1));
+        jPanel1.add(Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, -1, -1));
 
         TUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         TUsuario.setText("Usuario:");
-        jPanel1.add(TUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
+        jPanel1.add(TUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, -1, 30));
 
         TDocumento.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         TDocumento.setText("Documento:");
-        jPanel1.add(TDocumento, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, -1, -1));
+        jPanel1.add(TDocumento, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, -1, 30));
 
-        jPanel1.add(Usuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 170, 30));
+        Usuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UsuariosActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Usuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, 210, 30));
 
-        jPanel1.add(Documentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 210, 30));
+        Documentos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DocumentosActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Documentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 210, 30));
 
         Cancelar.setText("Cancelar");
         Cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -65,7 +94,7 @@ public class EliminarDocumento extends javax.swing.JFrame {
                 CancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 300, -1, -1));
+        jPanel1.add(Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, -1, -1));
 
         Eliminar.setText("Eliminar");
         Eliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -73,7 +102,15 @@ public class EliminarDocumento extends javax.swing.JFrame {
                 EliminarActionPerformed(evt);
             }
         });
-        jPanel1.add(Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 300, -1, -1));
+        jPanel1.add(Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, -1, -1));
+
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 130, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 370));
 
@@ -81,12 +118,46 @@ public class EliminarDocumento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
-        // TODO add your handling code here:
+        String usuario = Usuarios.getSelectedItem().toString();
+        Usuario actual = main.hashtable.buscarUsuario(usuario);
+        actual.eliminarDocumento(Documentos.getSelectedItem().toString());
+        main.ventana.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_EliminarActionPerformed
 
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
+
+        main.ventana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_CancelarActionPerformed
+
+    private void UsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsuariosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UsuariosActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String usuario = Usuarios.getSelectedItem().toString();
+        Usuario actual = main.hashtable.buscarUsuario(usuario);
+        if (actual.getpPrim() == null) {
+            this.Documentos.removeAllItems();
+        } else {
+            Documento aux = actual.getpPrim();
+            this.Documentos.removeAllItems();
+            while (aux != null) {
+                if (aux.getTiempo() == -1) {
+
+                    this.Documentos.addItem(aux.getNombre());
+
+                }
+                aux = aux.getpSig();
+            }
+
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void DocumentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DocumentosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DocumentosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -131,6 +202,7 @@ public class EliminarDocumento extends javax.swing.JFrame {
     private javax.swing.JLabel TUsuario;
     private javax.swing.JLabel Titulo;
     private javax.swing.JComboBox<String> Usuarios;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

@@ -18,37 +18,23 @@ import java.io.IOException;
 public class main {
 
     /**
-     * @param args the command line arguments
      */
+    public static HashTable hashtable;
+    public static MonticuloBinario monticulo;
+    public static Ventana1 ventana;
+    public static Funciones func;
+    
     public static void main(String[] args) throws IOException {
         
-        HashTable nuevo_hash = new HashTable(100);
-        MonticuloBinario monticulo = new MonticuloBinario();
-        Funciones func = new Funciones();
+        hashtable = new HashTable(20);
+        monticulo = new MonticuloBinario();
+        func = new Funciones();
         func.abrir_archivo();
-        nuevo_hash.leer_db();
-        //nuevo_hash.imprimir_hashtable();
-        for (int i = 0; i < 10; i++) {
-            nuevo_hash.buscarUsuario("angelo").insertarDocumento("doc" + i, 52, ".txt");
-        }
-        monticulo.insertar(nuevo_hash.buscarUsuario("angelo").getpPrim(), nuevo_hash.buscarUsuario("angelo"));
-        monticulo.insertar(nuevo_hash.buscarUsuario("angelo").getpPrim().getpSig(), nuevo_hash.buscarUsuario("angelo"));
-        monticulo.insertar(nuevo_hash.buscarUsuario("angelo").getpPrim().getpSig().getpSig(), nuevo_hash.buscarUsuario("angelo"));
-        monticulo.insertar(nuevo_hash.buscarUsuario("angelo").getpPrim().getpSig().getpSig().getpSig(), nuevo_hash.buscarUsuario("angelo"));
-        monticulo.insertar(nuevo_hash.buscarUsuario("angelo").getpPrim().getpSig().getpSig().getpSig().getpSig(), nuevo_hash.buscarUsuario("angelo"));
-        monticulo.insertar(nuevo_hash.buscarUsuario("angelo").getpPrim().getpSig().getpSig().getpSig().getpSig().getpSig(), nuevo_hash.buscarUsuario("angelo"));
-        monticulo.insertar(nuevo_hash.buscarUsuario("angelo").getpPrim().getpSig().getpSig().getpSig().getpSig().getpSig().getpSig(), nuevo_hash.buscarUsuario("angelo"));
-        nuevo_hash.buscarUsuario("angelo").getpPrim().setTiempo(9);
-        monticulo.imprimirMonticulo();
-        //monticulo.cancelarImpresion(nuevo_hash.buscarUsuario("angelo").getpPrim().getpSig());
-        monticulo.imprimirMonticulo();
-        //monticulo.imprimirDocumento();
-        monticulo.imprimirMonticulo();
-        //monticulo.imprimirDocumento();
-        //monticulo.cancelarImpresion(nuevo_hash.buscarUsuario("angelo").getpPrim().getpSig());
-        //monticulo.imprimirDocumento();
-        //monticulo.visualizarMonticulo();
-        Ventana1 ventana = new Ventana1();
+        hashtable.leer_db();
+        hashtable.imprimir_hashtable();
+        ventana = new Ventana1();
+        ventana.setLocationRelativeTo(null);
         ventana.setVisible(true);
+        
     }
 }

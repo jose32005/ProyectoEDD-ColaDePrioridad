@@ -4,6 +4,10 @@
  */
 package Interfaces;
 
+import EDD.Documento;
+import EDD.Usuario;
+import Ejecutable.main;
+
 /**
  *
  * @author evaas
@@ -16,6 +20,20 @@ public class EliminarDocCola extends javax.swing.JFrame {
     public EliminarDocCola() {
         initComponents();
         this.setLocationRelativeTo(null);
+        if (main.hashtable.getTamaño() == 0) {
+            System.out.println("La base de usuarios esta vacia");
+        } else {
+            for (int i = 0; i < main.hashtable.getTamaño(); i++) {
+                if (main.hashtable.arreglo[i] != null) {
+                    this.Usuarios.addItem(main.hashtable.arreglo[i].getNombre());
+                    Usuario aux = main.hashtable.arreglo[i].getpSig();
+                    while (aux != null) {
+                        this.Usuarios.addItem(aux.getNombre());
+                        aux = aux.getpSig();
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -33,8 +51,9 @@ public class EliminarDocCola extends javax.swing.JFrame {
         Usuarios = new javax.swing.JComboBox<>();
         TDocumento = new javax.swing.JLabel();
         DocumentosEnCola = new javax.swing.JComboBox<>();
-        Cancelar = new javax.swing.JButton();
         Eliminar = new javax.swing.JButton();
+        Cancelar1 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -49,9 +68,14 @@ public class EliminarDocCola extends javax.swing.JFrame {
 
         TUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         TUsuario.setText("Usuario:");
-        jPanel1.add(TUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, -1, -1));
+        jPanel1.add(TUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, -1, -1));
 
-        jPanel1.add(Usuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 170, 30));
+        Usuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UsuariosActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Usuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 170, 30));
 
         TDocumento.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         TDocumento.setText("Documento:");
@@ -64,14 +88,6 @@ public class EliminarDocCola extends javax.swing.JFrame {
         });
         jPanel1.add(DocumentosEnCola, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, 170, 30));
 
-        Cancelar.setText("Cancelar");
-        Cancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CancelarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 250, -1, -1));
-
         Eliminar.setText("Eliminar");
         Eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,22 +96,73 @@ public class EliminarDocCola extends javax.swing.JFrame {
         });
         jPanel1.add(Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 250, -1, -1));
 
+        Cancelar1.setText("Cancelar");
+        Cancelar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Cancelar1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Cancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 250, -1, -1));
+
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 130, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 370));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_CancelarActionPerformed
-
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
-        // TODO add your handling code here:
+        String usuario = Usuarios.getSelectedItem().toString();
+        Usuario actual = main.hashtable.buscarUsuario(usuario);
+        String documento = this.DocumentosEnCola.getSelectedItem().toString();
+        Documento aux = actual.getpPrim();
+        while (aux != null) {
+            if (aux.getNombre().equals(documento)) {
+                main.monticulo.cancelarImpresion(aux);
+                break;
+            }
+            aux = aux.getpSig();
+        }
+        main.ventana.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_EliminarActionPerformed
 
     private void DocumentosEnColaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DocumentosEnColaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_DocumentosEnColaActionPerformed
+
+    private void UsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsuariosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UsuariosActionPerformed
+
+    private void Cancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cancelar1ActionPerformed
+        main.ventana.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_Cancelar1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String usuario = Usuarios.getSelectedItem().toString();
+        Usuario actual = main.hashtable.buscarUsuario(usuario);
+        if (actual.getpPrim() == null) {
+            this.DocumentosEnCola.removeAllItems();
+        } else {
+            this.DocumentosEnCola.removeAllItems();
+            Documento aux = actual.getpPrim();
+            while (aux != null) {
+                if (aux.getTiempo() != -1) {
+                    this.DocumentosEnCola.addItem(aux.getNombre());
+                }
+                aux = aux.getpSig();
+            }
+
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -133,13 +200,14 @@ public class EliminarDocCola extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Cancelar;
+    private javax.swing.JButton Cancelar1;
     private javax.swing.JComboBox<String> DocumentosEnCola;
     private javax.swing.JButton Eliminar;
     private javax.swing.JLabel TDocumento;
     private javax.swing.JLabel TUsuario;
     private javax.swing.JLabel Titulo;
     private javax.swing.JComboBox<String> Usuarios;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

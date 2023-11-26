@@ -4,6 +4,10 @@
  */
 package Interfaces;
 
+import EDD.Usuario;
+import Ejecutable.main;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author evaas
@@ -16,6 +20,20 @@ public class CrearDoc extends javax.swing.JFrame {
     public CrearDoc() {
         initComponents();
         this.setLocationRelativeTo(null);
+        if (main.hashtable.getTamaño() == 0) {
+            System.out.println("La base de usuarios esta vacia");
+        } else {
+            for (int i = 0; i < main.hashtable.getTamaño(); i++) {
+                if (main.hashtable.arreglo[i] != null) {
+                    this.Usuarios.addItem(main.hashtable.arreglo[i].getNombre());
+                    Usuario aux = main.hashtable.arreglo[i].getpSig();
+                    while (aux != null) {
+                        this.Usuarios.addItem(aux.getNombre());
+                        aux = aux.getpSig();
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -38,7 +56,8 @@ public class CrearDoc extends javax.swing.JFrame {
         Cancelar = new javax.swing.JButton();
         Aceptar = new javax.swing.JButton();
         Titulo = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        TTipo1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -61,6 +80,12 @@ public class CrearDoc extends javax.swing.JFrame {
         TNombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         TNombre.setText("Nombre del Archivo:");
         jPanel1.add(TNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, -1, 30));
+
+        NombrejTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NombrejTextFieldActionPerformed(evt);
+            }
+        });
         jPanel1.add(NombrejTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 160, 250, 30));
 
         TTamaño.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -68,15 +93,15 @@ public class CrearDoc extends javax.swing.JFrame {
         jPanel1.add(TTamaño, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, -1, -1));
 
         TTipo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        TTipo.setText("Tipo:");
-        jPanel1.add(TTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 220, -1, -1));
+        TTipo.setText("MB");
+        jPanel1.add(TTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 220, -1, 30));
 
         TipojTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TipojTextFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(TipojTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 120, 30));
+        jPanel1.add(TipojTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 80, 30));
 
         Cancelar.setText("Cancelar");
         Cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -87,18 +112,28 @@ public class CrearDoc extends javax.swing.JFrame {
         jPanel1.add(Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, -1, -1));
 
         Aceptar.setText("Aceptar");
+        Aceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AceptarActionPerformed(evt);
+            }
+        });
         jPanel1.add(Aceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 290, -1, -1));
 
         Titulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         Titulo.setText("Crear Documento");
         jPanel1.add(Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, -1, -1));
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PDF (.pdf)", "Word (.docx/.doc)", "Texto (.txt)", "Excel (.xlsx/.xls)", "CSV (.csv)", "PowerPoint (.pptx/ .ppt)", "JPEG (.jpeg)", "PNG (.png)", "GIF (.gif)", "MP3 (.mp3)", "WAV (.wav)", "MP4 (.mp4)", "AVI (.avi)", "ZIP (.zip)", "RAR (.rar)", "Windows Executable (.exe)", "Linux Executable (.bin)", "JSON (.json)", "XML (.xml)", "Python Script (.py)", "Java Archive (.jar)", "JavaScript (.js)" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jComboBox1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 220, 130, 30));
+        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 220, 140, -1));
+
+        TTipo1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        TTipo1.setText("Tipo:");
+        jPanel1.add(TTipo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 220, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 370));
 
@@ -114,12 +149,31 @@ public class CrearDoc extends javax.swing.JFrame {
     }//GEN-LAST:event_TipojTextFieldActionPerformed
 
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
+        main.ventana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_CancelarActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarActionPerformed
+        String nombre_usuario = Usuarios.getSelectedItem().toString();
+        String nombre_archivo = NombrejTextField.getText();
+        String tipo = jComboBox1.getSelectedItem().toString();
+        String peso = NombrejTextField.getText() + " MB";
+        if(nombre_archivo.isEmpty() != true && peso.isEmpty() != true){
+            main.hashtable.buscarUsuario(nombre_usuario).insertarDocumento(nombre_archivo, peso, tipo);
+        }else{
+        JOptionPane.showMessageDialog(main.ventana, "Error al crear archivo");
+        }
+        main.ventana.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_AceptarActionPerformed
+
+    private void NombrejTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombrejTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_NombrejTextFieldActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,11 +217,12 @@ public class CrearDoc extends javax.swing.JFrame {
     private javax.swing.JLabel TNombre;
     private javax.swing.JLabel TTamaño;
     private javax.swing.JLabel TTipo;
+    private javax.swing.JLabel TTipo1;
     private javax.swing.JLabel TUsuario;
     private javax.swing.JTextField TipojTextField;
     private javax.swing.JLabel Titulo;
     private javax.swing.JComboBox<String> Usuarios;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,6 +4,7 @@
  */
 package EDD;
 
+import Ejecutable.main;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -16,7 +17,7 @@ import javax.swing.JOptionPane;
  */
 public class HashTable {
 
-    private Usuario[] arreglo;
+    public Usuario[] arreglo;
     private int tamaño;
     private int num_usuarios;
 
@@ -29,7 +30,7 @@ public class HashTable {
     // n = tamano del arreglo
     // i =  indice del arreglo
     public boolean EsEspacioVacio(int i) {
-        return this.arreglo[i] == null;
+        return this.getArreglo()[i] == null;
     }
 
     public int funHash(String nombre) {
@@ -37,25 +38,26 @@ public class HashTable {
         for (int i = 0; i < nombre.length(); i++) {
             indice += (int) nombre.charAt(i);
         }
-        indice = indice % this.tamaño;
+        indice = indice % this.getTamaño();
         return indice;
     }
 
-    public void InsertarUsuario(String nombre, String tipo) {
+    public void InsertarUsuario(String nombre, String tipo, boolean nuevo) {
+        nuevo = nuevo;
         Usuario nuevo_usuario = new Usuario(nombre, tipo);
         boolean usuario_existente = false;
         int i = this.funHash(nombre);
         if (this.EsEspacioVacio(i)) {
-            this.arreglo[i] = nuevo_usuario;
+            this.getArreglo()[i] = nuevo_usuario;
         } else {
-            if (arreglo[i].getNombre().equals(nuevo_usuario.getNombre())) {
-                System.out.println("El usuario ya existe");
+            if (getArreglo()[i].getNombre().equals(nuevo_usuario.getNombre())) {
+                JOptionPane.showMessageDialog(main.ventana, "El usuario: " + nombre + " ya existe");
                 usuario_existente = true;
             } else {
-                Usuario aux = arreglo[i];
+                Usuario aux = getArreglo()[i];
                 while (aux.getpSig() != null) {
                     if (aux.getNombre().equals(nuevo_usuario.getNombre())) {
-                        System.out.println("El usuario ya existe");
+                        JOptionPane.showMessageDialog(main.ventana, "El usuario: " + nombre + " ya existe");
                         usuario_existente = true;
                     } else {
                         aux = aux.getpSig();
@@ -69,16 +71,22 @@ public class HashTable {
 
         }
         if (usuario_existente == false) {
-            this.num_usuarios = +1;
+            this.setNum_usuarios(+1);
+            
         }
+        if (nuevo == true && usuario_existente == false) {
+            JOptionPane.showMessageDialog(main.ventana, "Usuario: " + nombre + " agregado con exito");           
+        }
+        
     }
 
     public void EliminarUsuario(String nombre) {
         int i = this.funHash(nombre);
-        Usuario aux = arreglo[i];
+        Usuario aux = getArreglo()[i];
         if ((aux.getNombre().equals(nombre)) && (aux.getpSig() == null)) {
-            arreglo[i] = null;
-            this.num_usuarios = - 1;
+            getArreglo()[i] = null;
+            this.setNum_usuarios(- 1);
+            JOptionPane.showMessageDialog(main.ventana, "Usuario: " + nombre +" eliminado con exito");
         } else {
             while (aux.getpSig() != null) {
                 Usuario prev = aux;
@@ -86,7 +94,8 @@ public class HashTable {
                 if (aux.getNombre().equals(nombre)) {
                     prev.setpSig(aux.getpSig());
                     aux.setpSig(null);
-                    this.num_usuarios = - 1;
+                    this.setNum_usuarios(- 1);
+                    JOptionPane.showMessageDialog(main.ventana, "Usuario: " + nombre +" eliminado con exito");
                     break;
                 } else {
                     System.out.println("El usuario no existe");
@@ -99,8 +108,8 @@ public class HashTable {
     }
 
     public Usuario buscarUsuario(String nombre) {
-        if (arreglo[this.funHash(nombre)] != null) {
-            Usuario usuario = arreglo[this.funHash(nombre)];
+        if (getArreglo()[this.funHash(nombre)] != null) {
+            Usuario usuario = getArreglo()[this.funHash(nombre)];
             if (usuario.getNombre().equals(nombre)) {
                 return usuario;
             } else {
@@ -126,7 +135,10 @@ public class HashTable {
         String path = "test\\db.csv";
         File file = new File(path);
         System.setProperty("org.graphstream.ui", "swing");
-
+        
+        for (int i = 0; i < this.tamaño; i++) {
+            arreglo[i] = null;
+        }
         try {
             if (!file.exists()) {
                 file.createNewFile();
@@ -143,7 +155,7 @@ public class HashTable {
                         for (int i = 1; i < usuarios_split.length; i++) {
                             String nuevo_elemento = usuarios_split[i];
                             String[] nueva_relacion = nuevo_elemento.split(", ");
-                            this.InsertarUsuario(nueva_relacion[0], nueva_relacion[1]);
+                            this.InsertarUsuario(nueva_relacion[0], nueva_relacion[1], false);
                         }
 
                     }
@@ -158,14 +170,14 @@ public class HashTable {
     }
 
     public void imprimir_hashtable() {
-        if (this.num_usuarios == 0) {
+        if (this.getNum_usuarios() == 0) {
             System.out.println("La base de usuarios esta vacia");
         } else {
             System.out.println("Lista de usuarios");
-            for (int i = 0; i < tamaño; i++) {
-                if (arreglo[i] != null) {
-                    System.out.println(arreglo[i].getNombre() + i);
-                    Usuario aux = arreglo[i].getpSig();
+            for (int i = 0; i < getTamaño(); i++) {
+                if (getArreglo()[i] != null) {
+                    System.out.println(getArreglo()[i].getNombre() + i);
+                    Usuario aux = getArreglo()[i].getpSig();
                     while (aux != null) {
                         System.out.println(aux.getNombre() + i);
                         aux = aux.getpSig();
@@ -175,4 +187,65 @@ public class HashTable {
         }
 
     }
+
+    public void recorrer_hashtable() {
+        if (this.getNum_usuarios() == 0) {
+            System.out.println("La base de usuarios esta vacia");
+        } else {
+            for (int i = 0; i < getTamaño(); i++) {
+                if (getArreglo()[i] != null) {
+                    System.out.println(getArreglo()[i].getNombre() + i);
+                    Usuario aux = getArreglo()[i].getpSig();
+                    while (aux != null) {
+                        System.out.println(aux.getNombre() + i);
+                        aux = aux.getpSig();
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * @return the arreglo
+     */
+    public Usuario[] getArreglo() {
+        return arreglo;
+    }
+
+    /**
+     * @param arreglo the arreglo to set
+     */
+    public void setArreglo(Usuario[] arreglo) {
+        this.arreglo = arreglo;
+    }
+
+    /**
+     * @return the tamaño
+     */
+    public int getTamaño() {
+        return tamaño;
+    }
+
+    /**
+     * @param tamaño the tamaño to set
+     */
+    public void setTamaño(int tamaño) {
+        this.tamaño = tamaño;
+    }
+
+    /**
+     * @return the num_usuarios
+     */
+    public int getNum_usuarios() {
+        return num_usuarios;
+    }
+
+    /**
+     * @param num_usuarios the num_usuarios to set
+     */
+    public void setNum_usuarios(int num_usuarios) {
+        this.num_usuarios = num_usuarios;
+    }
+    
+    
 }

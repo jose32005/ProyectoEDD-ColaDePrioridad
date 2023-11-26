@@ -4,6 +4,17 @@
  */
 package Interfaces;
 
+import EDD.HashTable;
+import EDD.MonticuloBinario;
+import EDD.Usuario;
+import Ejecutable.main;
+import static Ejecutable.main.func;
+import static Ejecutable.main.hashtable;
+import Extras.Funciones;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author evaas
@@ -13,6 +24,8 @@ public class Ventana1 extends javax.swing.JFrame {
     /**
      * Creates new form Ventana1
      */
+    
+    
     public Ventana1() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -44,7 +57,9 @@ public class Ventana1 extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         CrearDocumento1 = new javax.swing.JButton();
         Salir = new javax.swing.JButton();
+        EnviarACola = new javax.swing.JButton();
         Fondo = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -162,10 +177,21 @@ public class Ventana1 extends javax.swing.JFrame {
         });
         jPanel1.add(Salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 20, -1, 20));
 
+        EnviarACola.setText("Enviar Documento a Cola");
+        EnviarACola.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EnviarAColaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(EnviarACola, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, 190, 20));
+
         Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Fondo PrintEDD.png"))); // NOI18N
         jPanel1.add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 390));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 680, 380));
+
+        jButton2.setText("jButton2");
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -177,15 +203,15 @@ public class Ventana1 extends javax.swing.JFrame {
     }//GEN-LAST:event_AgregarUsuarioActionPerformed
 
     private void VerUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerUsuariosActionPerformed
+
         VerUsuarios V6 = new VerUsuarios();
         this.setVisible(false);
         V6.setVisible(true);
     }//GEN-LAST:event_VerUsuariosActionPerformed
 
     private void ColaSecuenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColaSecuenciaActionPerformed
-        ColaSecuencia V5 = new ColaSecuencia();
-        this.setVisible(false);
-        V5.setVisible(true);
+        main.monticulo.visualizarGrafo();
+        //V5.setVisible(true);
     }//GEN-LAST:event_ColaSecuenciaActionPerformed
 
     private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
@@ -199,17 +225,20 @@ public class Ventana1 extends javax.swing.JFrame {
     }//GEN-LAST:event_EliminarUsuarioActionPerformed
 
     private void CargarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CargarArchivoActionPerformed
-        // TODO add your handling code here:
+        main.func.abrir_archivo();
+        try {
+            main.hashtable.leer_db();
+        } catch (IOException ex) {
+            Logger.getLogger(Ventana1.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_CargarArchivoActionPerformed
 
     private void ColaArbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColaArbolActionPerformed
-        ColaArbol V8 = new ColaArbol();
-        this.setVisible(false);
-        V8.setVisible(true);
+        main.monticulo.visualizarMonticulo();
     }//GEN-LAST:event_ColaArbolActionPerformed
 
     private void LiberarImpresoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LiberarImpresoraActionPerformed
-        // TODO add your handling code here:
+        main.monticulo.imprimirDocumento();
     }//GEN-LAST:event_LiberarImpresoraActionPerformed
 
     private void EliminarDocDeLaColaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarDocDeLaColaActionPerformed
@@ -219,7 +248,9 @@ public class Ventana1 extends javax.swing.JFrame {
     }//GEN-LAST:event_EliminarDocDeLaColaActionPerformed
 
     private void CrearDocumento1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearDocumento1ActionPerformed
-        // TODO add your handling code here:
+        CrearDoc V = new CrearDoc();
+        this.setVisible(false);
+        V.setVisible(true);
     }//GEN-LAST:event_CrearDocumento1ActionPerformed
 
     private void EliminarDocumento1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarDocumento1ActionPerformed
@@ -227,6 +258,12 @@ public class Ventana1 extends javax.swing.JFrame {
         this.setVisible(false);
         V7.setVisible(true);
     }//GEN-LAST:event_EliminarDocumento1ActionPerformed
+
+    private void EnviarAColaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnviarAColaActionPerformed
+        InsertarDocCola V = new InsertarDocCola();
+        this.setVisible(false);
+        V.setVisible(true);
+    }//GEN-LAST:event_EnviarAColaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -272,10 +309,12 @@ public class Ventana1 extends javax.swing.JFrame {
     private javax.swing.JButton EliminarDocDeLaCola;
     private javax.swing.JButton EliminarDocumento1;
     private javax.swing.JButton EliminarUsuario;
+    private javax.swing.JButton EnviarACola;
     private javax.swing.JLabel Fondo;
     private javax.swing.JButton LiberarImpresora;
     private javax.swing.JButton Salir;
     private javax.swing.JButton VerUsuarios;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

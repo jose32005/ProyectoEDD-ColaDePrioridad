@@ -4,6 +4,9 @@
  */
 package Interfaces;
 
+import EDD.Usuario;
+import Ejecutable.main;
+
 /**
  *
  * @author evaas
@@ -13,6 +16,8 @@ public class AgregarUsuario extends javax.swing.JFrame {
     /**
      * Creates new form V2
      */
+    
+    
     public AgregarUsuario() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -45,18 +50,18 @@ public class AgregarUsuario extends javax.swing.JFrame {
 
         Nombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Nombre.setText("Nombre de Usuario: ");
-        jPanel1.add(Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, -1, -1));
+        jPanel1.add(Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, -1, -1));
 
         Usuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 UsuarioActionPerformed(evt);
             }
         });
-        jPanel1.add(Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 80, 200, 40));
+        jPanel1.add(Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, 200, 40));
 
         Tipo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Tipo.setText("Tipo:");
-        jPanel1.add(Tipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 180, -1, -1));
+        jPanel1.add(Tipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, -1, -1));
 
         Prioridades.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alto", "Medio", "Bajo" }));
         Prioridades.addActionListener(new java.awt.event.ActionListener() {
@@ -64,7 +69,7 @@ public class AgregarUsuario extends javax.swing.JFrame {
                 PrioridadesActionPerformed(evt);
             }
         });
-        jPanel1.add(Prioridades, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, 100, 30));
+        jPanel1.add(Prioridades, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 190, 100, 30));
 
         Cancelar.setText("Cancelar");
         Cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -72,7 +77,7 @@ public class AgregarUsuario extends javax.swing.JFrame {
                 CancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, -1, -1));
+        jPanel1.add(Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 270, -1, -1));
 
         Aceptar.setText("Aceptar");
         Aceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -80,11 +85,11 @@ public class AgregarUsuario extends javax.swing.JFrame {
                 AceptarActionPerformed(evt);
             }
         });
-        jPanel1.add(Aceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 290, -1, -1));
+        jPanel1.add(Aceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 270, -1, -1));
 
         Titulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         Titulo.setText("Agregar Usuario");
-        jPanel1.add(Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
+        jPanel1.add(Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 370));
 
@@ -96,16 +101,22 @@ public class AgregarUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_PrioridadesActionPerformed
 
     private void UsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsuarioActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_UsuarioActionPerformed
 
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
-        //ventana.setVisible(true);
+        main.ventana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_CancelarActionPerformed
 
     private void AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarActionPerformed
-        String tipo = Prioridades.getSelectedItem().toString();
+        String nombre = Usuario.getText();
+        String prioridad = Prioridades.getSelectedItem().toString();
+        if (nombre.isEmpty() != true) {
+           main.hashtable.InsertarUsuario(nombre, prioridad, true);
+        }
+        main.ventana.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_AceptarActionPerformed
 
     /**

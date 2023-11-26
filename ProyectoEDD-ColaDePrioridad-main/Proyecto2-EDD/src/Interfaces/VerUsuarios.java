@@ -4,6 +4,11 @@
  */
 package Interfaces;
 
+import EDD.Documento;
+import EDD.Usuario;
+import Ejecutable.main;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author evaas
@@ -16,6 +21,20 @@ public class VerUsuarios extends javax.swing.JFrame {
     public VerUsuarios() {
         initComponents();
         this.setLocationRelativeTo(null);
+        if (main.hashtable.getTamaño() == 0) {
+            System.out.println("La base de usuarios esta vacia");
+        } else {
+            for (int i = 0; i < main.hashtable.getTamaño(); i++) {
+                if (main.hashtable.arreglo[i] != null) {
+                    this.Usuarios.addItem(main.hashtable.arreglo[i].getNombre());
+                    Usuario aux = main.hashtable.arreglo[i].getpSig();
+                    while (aux != null) {
+                        this.Usuarios.addItem(aux.getNombre());
+                        aux = aux.getpSig();
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -30,6 +49,11 @@ public class VerUsuarios extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         Titulo = new javax.swing.JLabel();
         Cerrar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TablaDocs = new javax.swing.JTable();
+        Buscar = new javax.swing.JButton();
+        Usuarios = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -39,8 +63,8 @@ public class VerUsuarios extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Titulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        Titulo.setText("Usuarios");
-        jPanel1.add(Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, -1, -1));
+        Titulo.setText("Lista de Documentos por Usuario");
+        jPanel1.add(Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, -1, -1));
 
         Cerrar.setText("Cerrar");
         Cerrar.addActionListener(new java.awt.event.ActionListener() {
@@ -48,7 +72,37 @@ public class VerUsuarios extends javax.swing.JFrame {
                 CerrarActionPerformed(evt);
             }
         });
-        jPanel1.add(Cerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 330, -1, -1));
+        jPanel1.add(Cerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, -1, -1));
+
+        TablaDocs.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre", "Tamaño", "Tipo", "En Cola"
+            }
+        ));
+        jScrollPane1.setViewportView(TablaDocs);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 100, 510, 230));
+
+        Buscar.setText("Buscar");
+        Buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 60, -1, -1));
+
+        Usuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UsuariosActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Usuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, 130, -1));
+
+        jLabel1.setText("Usuario:");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, -1, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 370));
 
@@ -56,8 +110,31 @@ public class VerUsuarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
+        main.ventana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_CerrarActionPerformed
+
+    private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
+
+        DefaultTableModel modelo = (DefaultTableModel) TablaDocs.getModel();
+        modelo.setRowCount(0);
+        String usuario = Usuarios.getSelectedItem().toString();
+        Usuario actual = main.hashtable.buscarUsuario(usuario);
+        Documento aux = actual.getpPrim();
+        while(aux!= null){
+            String enCola = "⛔";
+            if (aux.getTiempo() != -1){
+                enCola = "✅";
+            }
+            String[] fila = {aux.getNombre(),aux.getTamaño(),aux.getTipo(),enCola};
+            modelo.addRow(fila);
+            aux =aux.getpSig();
+        }
+    }//GEN-LAST:event_BuscarActionPerformed
+
+    private void UsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsuariosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UsuariosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -95,8 +172,13 @@ public class VerUsuarios extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Buscar;
     private javax.swing.JButton Cerrar;
+    private javax.swing.JTable TablaDocs;
     private javax.swing.JLabel Titulo;
+    private javax.swing.JComboBox<String> Usuarios;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

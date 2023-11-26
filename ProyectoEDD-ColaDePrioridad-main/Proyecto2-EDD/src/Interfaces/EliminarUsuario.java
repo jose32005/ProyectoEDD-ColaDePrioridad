@@ -4,6 +4,9 @@
  */
 package Interfaces;
 
+import EDD.Usuario;
+import Ejecutable.main;
+
 /**
  *
  * @author evaas
@@ -13,9 +16,24 @@ public class EliminarUsuario extends javax.swing.JFrame {
     /**
      * Creates new form EliminarUsuario
      */
+    
     public EliminarUsuario() {
         initComponents();
         this.setLocationRelativeTo(null);
+        if (main.hashtable.getTamaño() == 0) {
+            System.out.println("La base de usuarios esta vacia");
+        } else {
+            for (int i = 0; i < main.hashtable.getTamaño(); i++) {
+                if (main.hashtable.arreglo[i] != null) {
+                    this.jComboBox1.addItem(main.hashtable.arreglo[i].getNombre());
+                    Usuario aux = main.hashtable.arreglo[i].getpSig();
+                    while (aux != null) {
+                        this.jComboBox1.addItem(aux.getNombre());
+                        aux = aux.getpSig();
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -43,14 +61,14 @@ public class EliminarUsuario extends javax.swing.JFrame {
 
         TUsuario.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         TUsuario.setText("Usuario:");
-        jPanel1.add(TUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, -1, -1));
+        jPanel1.add(TUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 160, -1, -1));
 
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 260, 40));
+        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 260, 40));
 
         Cancelar.setText("Cancelar");
         Cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -58,14 +76,19 @@ public class EliminarUsuario extends javax.swing.JFrame {
                 CancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 300, -1, -1));
+        jPanel1.add(Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, -1, -1));
 
         Eliminar.setText("Eliminar");
-        jPanel1.add(Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 300, -1, -1));
+        Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EliminarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Eliminar Usuario");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 370));
 
@@ -73,12 +96,20 @@ public class EliminarUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
+        
+    
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
+        main.ventana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_CancelarActionPerformed
+
+    private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
+        main.hashtable.EliminarUsuario(jComboBox1.getSelectedItem().toString());
+        main.ventana.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_EliminarActionPerformed
 
     /**
      * @param args the command line arguments

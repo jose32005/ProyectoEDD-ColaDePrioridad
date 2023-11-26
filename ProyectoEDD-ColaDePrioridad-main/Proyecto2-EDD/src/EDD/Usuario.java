@@ -4,6 +4,9 @@
  */
 package EDD;
 
+import Ejecutable.main;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author joses
@@ -39,7 +42,7 @@ public class Usuario {
         }
     }
 
-    public void insertarDocumento(String nombre, int tamaño, String tipo) {
+    public void insertarDocumento(String nombre, String tamaño, String tipo) {
         Documento nuevoDocumento = new Documento(nombre, tamaño, tipo);
         if (this.esVacio()) {
             this.setpPrim(nuevoDocumento);
@@ -51,34 +54,39 @@ public class Usuario {
             pAux.setpSig(nuevoDocumento);
         }
         this.setiN(this.getiN() + 1);
+        JOptionPane.showMessageDialog(main.ventana, "Documento: " + nombre + " creado con exito"
+                + "");
     }
 
     public void eliminarDocumento(String nombreDoc) {
         if (getpPrim() == null || nombreDoc == null) {
+            System.out.println("flag 1");
             return;
         }
 
         if (getpPrim().getNombre().equals(nombreDoc)) {
-            if (getpPrim().getTiempo() != -1) {
+            if (getpPrim().getTiempo() == -1) {
                 setpPrim(getpPrim().getpSig());
                 setiN(getiN() - 1);
+                JOptionPane.showMessageDialog(main.ventana, "Documento " + nombreDoc + " eliminado con exito");
             }
             return;
 
         }
 
-        Documento actual = getpPrim();
+        Documento prev = this.getpPrim();
+        Documento actual = getpPrim().getpSig();
 
-        if (getpPrim().getNombre().equals(nombreDoc)) {
-            while (actual.getpSig() != null && !actual.getpSig().getNombre().equals(nombreDoc)) {
-                actual = actual.getpSig();
-            }
+        while (actual.getpSig() != null && !actual.getNombre().equals(nombreDoc)) {
+            prev = actual;
+            actual = actual.getpSig();
+        }
 
-            if (actual.getpSig() != null) {
-                actual.setpSig(actual.getpSig().getpSig());
-                setiN(getiN() - 1);
-            }
-
+        if (actual.getNombre().equals(nombreDoc)) {
+            prev.setpSig(actual.getpSig());
+            actual.setpSig(null);
+            setiN(getiN() - 1);
+            JOptionPane.showMessageDialog(main.ventana, "Documento " + nombreDoc + " eliminado con exito");
         }
 
     }

@@ -5,40 +5,28 @@
 package EDD;
 
 /**
- * La clase Documento representa un documento que puede ser procesado en una cola
- * de impresión. Cada documento tiene un nombre, un tamaño, un tipo y un tiempo asociado.
- * 
- * El tiempo por defecto se establece en -1, indicando que el documento no ha sido
- * procesado en la cola de impresión.
  *
- * @author G. Angelo, S. Estefania y S. Jose
+ * @author joses
  */
 public class Documento {
     private String nombre;
-    private int tamaño;
+    private String tamaño;
     private String tipo;
     private Documento pSig;
     private int tiempo;
     
-    /**
-     * Constructor de la clase Documento.
-     * 
-     * @param nombre El nombre del documento.
-     * @param tamaño El tamaño del documento.
-     * @param tipo El tipo del documento.
-     * @author S. Estefania, G. Angelo y S. Jose
-     */
-    public Documento (String nombre, int tamaño, String tipo){
+    
+    public Documento (String nombre, String tamaño, String tipo){
         this.nombre = nombre;
         this.tamaño = tamaño;
         this.tipo = tipo;
         this.pSig = null;
-        this.tiempo = -1;            
+        this.tiempo = -1;
+                
     }
 
     /**
      * @return the nombre
-     * @author S. Estefania, G. Angelo y S. Jose
      */
     public String getNombre() {
         return nombre;
@@ -46,7 +34,6 @@ public class Documento {
 
     /**
      * @param nombre the nombre to set
-     * @author S. Estefania, G. Angelo y S. Jose
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -54,23 +41,20 @@ public class Documento {
 
     /**
      * @return the tamaño
-     * @author S. Estefania, G. Angelo y S. Jose
      */
-    public int getTamaño() {
+    public String getTamaño() {
         return tamaño;
     }
 
     /**
      * @param tamaño the tamaño to set
-     * @author S. Estefania, G. Angelo y S. Jose
      */
-    public void setTamaño(int tamaño) {
+    public void setTamaño(String tamaño) {
         this.tamaño = tamaño;
     }
 
     /**
      * @return the tipo
-     * @author S. Estefania, G. Angelo y S. Jose
      */
     public String getTipo() {
         return tipo;
@@ -78,7 +62,6 @@ public class Documento {
 
     /**
      * @param tipo the tipo to set
-     * @author S. Estefania, G. Angelo y S. Jose
      */
     public void setTipo(String tipo) {
         this.tipo = tipo;
@@ -86,7 +69,6 @@ public class Documento {
 
     /**
      * @return the pSig
-     * @author S. Estefania, G. Angelo y S. Jose
      */
     public Documento getpSig() {
         return pSig;
@@ -94,7 +76,6 @@ public class Documento {
 
     /**
      * @param pSig the pSig to set
-     * @author S. Estefania, G. Angelo y S. Jose
      */
     public void setpSig(Documento pSig) {
         this.pSig = pSig;
@@ -102,7 +83,6 @@ public class Documento {
 
     /**
      * @return the tiempo
-     * @author S. Estefania, G. Angelo y S. Jose
      */
     public int getTiempo() {
         return tiempo;
@@ -110,7 +90,6 @@ public class Documento {
 
     /**
      * @param tiempo the tiempo to set
-     * @author S. Estefania, G. Angelo y S. Jose
      */
     public void setTiempo(int tiempo) {
         this.tiempo = tiempo;

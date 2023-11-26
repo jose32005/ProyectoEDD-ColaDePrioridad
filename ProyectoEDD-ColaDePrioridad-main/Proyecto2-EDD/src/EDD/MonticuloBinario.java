@@ -3,16 +3,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package EDD;
+
+import Ejecutable.main;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
-import java.awt.Color;
 import java.awt.event.MouseEvent;
-import java.util.Random;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.ui.view.Viewer;
+
 /**
  *
  * @author joses
@@ -70,37 +72,24 @@ public class MonticuloBinario {
     }
 
     public Documento eliminarMinimo() {
+        if (tamaño <= 0) {
+            JOptionPane.showMessageDialog(main.ventana, "Monticulo Vacio");
+            return null;
+        }
 
         Documento minimo = monticulo[0];
-        minimo.setTiempo(-1);
-        monticulo[0] = monticulo[tamaño - 1];
-        tamaño--;
-        Orden(0);
+        if (minimo == null) {
+            System.out.println("Error: El mínimo es null.");
+            return null;
+        } else {
+            minimo.setTiempo(-1);
 
-        return minimo;
-    }
-
-    public void Orden(int indice) {
-        int indiceMinimo = indice;
-        int izquierdo = obtenerHijoIzquierdo(indice);
-        int derecho = obtenerHijoDerecho(indice);
-
-        if (izquierdo < tamaño && monticulo[izquierdo].getTiempo() < monticulo[indiceMinimo].getTiempo()) {
-            indiceMinimo = izquierdo;
+            monticulo[0] = monticulo[this.tamaño - 1];
+            Orden(0);
+            tamaño--;
+            return minimo;
         }
 
-        if (derecho < tamaño && monticulo[derecho].getTiempo() < monticulo[indiceMinimo].getTiempo()) {
-            indiceMinimo = derecho;
-        }
-
-        if (indice != indiceMinimo) {
-            intercambiar(indice, indiceMinimo);
-            Orden(indiceMinimo);
-        }
-    }
-
-    public boolean estaVacio() {
-        return tamaño == 0;
     }
 
     public void imprimirMonticulo() {
@@ -120,6 +109,7 @@ public class MonticuloBinario {
         }
         doc.setTiempo(etiqueta);
     }
+
     public void visualizarMonticulo() {
         SwingUtilities.invokeLater(() -> {
             mxGraph graph = new mxGraph() {
@@ -137,7 +127,7 @@ public class MonticuloBinario {
 
             graph.getModel().beginUpdate();
             try {
-                dibujarMonticulo(graph, parent, 300, 100, 20, 20);
+                dibujarMonticulo(graph, parent, 270, 100, 30, 30);
             } finally {
                 graph.getModel().endUpdate();
             }
@@ -148,7 +138,7 @@ public class MonticuloBinario {
                     return false;
                 }
             };
-            JFrame frame = new JFrame("Montículo Binario Como Arbol");
+            JFrame frame = new JFrame("Visualizador de Montículo Binario");
             frame.getContentPane().add(graphComponent);
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -163,10 +153,7 @@ public class MonticuloBinario {
 
     private void dibujarMonticulo(mxGraph graph, Object parent, int x, int y, int ancho, int alto) {
         graph.setCellsSelectable(true);
-        graph.setCellsDisconnectable(false);
         graph.setConnectableEdges(false);
-        graph.setEdgeLabelsMovable(false);
-        
         int nivel = 1;
         int nivelAnterior = 0;
         int yOffset = alto * 2;
@@ -178,13 +165,10 @@ public class MonticuloBinario {
 
         int ajusteX = (anchoVentana - anchoMonticulo) / 2;
 
-        String estiloNodo = "rounded=1; shadow=1; fontSize=12; fontColor=#000000;";
-        Color[] paletaColores = {Color.PINK, Color.BLUE, Color.GREEN, Color.YELLOW, Color.WHITE};  // Puedes ajustar la paleta de colores
-
         for (int i = 0; i < tamaño; i++) {
             int actualX;
             int actualY;
-            Color colorAleatorio = obtenerColorAleatorio(paletaColores, nivel);
+
             if (i == 0) {
                 actualX = x + ajusteX;
                 actualY = y;
@@ -197,19 +181,18 @@ public class MonticuloBinario {
 
                 if (obtenerHijoIzquierdo(padreIndice) == i) {
                     // El nodo actual es el hijo izquierdo del padre
-                    
                     actualX = ejeXPadre - ancho * 2 - ajusteX;
                 } else {
                     // El nodo actual es el hijo derecho del padre
                     int anchoPadre = (int) graph.getCellGeometry(vertices[padreIndice]).getWidth();
-                    ajusteX = (ajusteX / 2) + 8;
+                    ajusteX /= 2;
                     actualX = ejeXPadre - anchoPadre + ancho * 2 + ajusteX;
                 }
                 actualY = y + nivel * yOffset;
 
             }
 
-            vertices[i] = graph.insertVertex(parent, null, monticulo[i].getNombre(), actualX, actualY, ancho, alto, estiloNodo + "fillColor=" + convertirColorAHexadecimal(colorAleatorio) + ";");
+            vertices[i] = graph.insertVertex(parent, null, monticulo[i].getNombre(), actualX, actualY, ancho, alto);
 
             if (i != 0) {
                 int padreIndice = obtenerPadre(i);
@@ -220,15 +203,6 @@ public class MonticuloBinario {
                 nivel++;
             }
         }
-    }
-    private Color obtenerColorAleatorio(Color[] paletaColores, int nivel) {
-        Random rand = new Random(nivel);  // Fija la semilla para obtener el mismo color para el mismo nivel
-        return paletaColores[rand.nextInt(paletaColores.length)];
-    }
-
-
-    private String convertirColorAHexadecimal(Color color) {
-        return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
     }
 
     public void cargarColaEnGrafo() {
@@ -269,30 +243,84 @@ public class MonticuloBinario {
     public void visualizarGrafo() {
         cargarColaEnGrafo();
         Viewer viewer = graph.display();
+        viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.HIDE_ONLY);
         viewer.getDefaultView().enableMouseOptions();
-
         viewer.disableAutoLayout();
     }
-    
 
-    
-    public void cancelarImpresion(Documento doc) {
-        if (doc.getTiempo() != -1) {
-            doc.setTiempo(0);
-            this.Orden(0);
-            this.eliminarMinimo();
-        } else {
-            System.out.println("El documento no esta en cola");
+    public void Orden(int indice) {
+        int indiceMinimo = indice;
+        int izquierdo = obtenerHijoIzquierdo(indice);
+        int derecho = obtenerHijoDerecho(indice);
+
+        if (izquierdo < tamaño && monticulo[izquierdo] != null
+                && (monticulo[indiceMinimo] == null || monticulo[izquierdo].getTiempo() >= monticulo[indiceMinimo].getTiempo())) {
+            indiceMinimo = izquierdo;
+        }
+
+        if (derecho < tamaño && monticulo[derecho] != null
+                && (monticulo[indiceMinimo] == null || monticulo[derecho].getTiempo() >= monticulo[indiceMinimo].getTiempo())) {
+            indiceMinimo = derecho;
+        }
+
+        if (indice != indiceMinimo) {
+            intercambiar(indice, indiceMinimo);
+            Orden(indiceMinimo);
         }
     }
 
-    public void imprimirDocumento() { //Liberar Impresora
+
+
+    public void ordenarMonticuloImprimir() {
+        int temp = tamaño;
+        for (int i = tamaño / 2 - 1; i >= 0; i--) {
+            Orden(i);
+        }
+        for (int i = tamaño - 1; i > 0; i--) {
+            intercambiar(0, i);
+            tamaño--;
+            Orden(0);
+        }
+        tamaño = temp;
+    }
+
+    public void imprimirDocumento() {
         if (tamaño <= 0) {
-            System.out.println("El montículo está vacío, no se puede eliminar el mínimo.");
+            JOptionPane.showMessageDialog(main.ventana, "Monticulo Vacio");
         } else {
+            ordenarMonticuloImprimir();
             Documento doc = this.eliminarMinimo();
-            System.out.println("Documento impreso: " + doc.getNombre());
+            System.out.println("Imprimiendo documento: " + doc.getNombre() + " con tiempo " + doc.getTiempo());
+            JOptionPane.showMessageDialog(main.ventana, "Se ha impreso con exito el archivo: " + doc.getNombre());
+        }
+    }
+
+    public void cancelarImpresion(Documento doc) {
+        if (doc.getTiempo() != -1) {
+            // Elimina el documento del montículo sin cambiar su tiempo
+            eliminarDocumento(doc);
+            // Restablece el tiempo a -1 después de eliminar el documento
+            doc.setTiempo(-1);
+            JOptionPane.showMessageDialog(main.ventana, doc.getNombre() + " eliminado con exito de la cola");
+        } else {
+            System.out.println("El documento no está en cola");
+        }
+    }
+
+    private void eliminarDocumento(Documento doc) {
+        int i;
+        for (i = 0; i < tamaño; i++) {
+            if (monticulo[i] == doc) {
+                break;
+            }
         }
 
+        if (i < tamaño) {
+            monticulo[i] = monticulo[tamaño - 1];
+            tamaño--;
+            Orden(i);
+        } else {
+            System.out.println("El documento no está en cola");
+        }
     }
 }
