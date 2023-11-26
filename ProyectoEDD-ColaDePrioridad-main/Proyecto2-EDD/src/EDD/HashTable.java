@@ -187,7 +187,10 @@ public class HashTable {
         }
 
     }
-
+    /**
+    * Imprime la lista de usuarios en la tabla de dispersión.
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     public void recorrer_hashtable() {
         if (this.getNum_usuarios() == 0) {
             System.out.println("La base de usuarios esta vacia");
@@ -207,6 +210,7 @@ public class HashTable {
 
     /**
      * @return the arreglo
+     * @author S. Estefania, G. Angelo y S. Jose
      */
     public Usuario[] getArreglo() {
         return arreglo;
@@ -214,6 +218,7 @@ public class HashTable {
 
     /**
      * @param arreglo the arreglo to set
+     * @author S. Estefania, G. Angelo y S. Jose
      */
     public void setArreglo(Usuario[] arreglo) {
         this.arreglo = arreglo;
@@ -221,6 +226,7 @@ public class HashTable {
 
     /**
      * @return the tamaño
+     * @author S. Estefania, G. Angelo y S. Jose
      */
     public int getTamaño() {
         return tamaño;
@@ -228,6 +234,7 @@ public class HashTable {
 
     /**
      * @param tamaño the tamaño to set
+     * @author S. Estefania, G. Angelo y S. Jose
      */
     public void setTamaño(int tamaño) {
         this.tamaño = tamaño;
@@ -235,6 +242,7 @@ public class HashTable {
 
     /**
      * @return the num_usuarios
+     * @author S. Estefania, G. Angelo y S. Jose
      */
     public int getNum_usuarios() {
         return num_usuarios;
@@ -242,6 +250,7 @@ public class HashTable {
 
     /**
      * @param num_usuarios the num_usuarios to set
+     * @author S. Estefania, G. Angelo y S. Jose
      */
     public void setNum_usuarios(int num_usuarios) {
         this.num_usuarios = num_usuarios;
