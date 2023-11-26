@@ -5,9 +5,14 @@
 package EDD;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
+import java.awt.Color;
 import java.awt.event.MouseEvent;
+import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import org.graphstream.graph.Node;
+import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.ui.view.Viewer;
 /**
  *
  * @author joses
