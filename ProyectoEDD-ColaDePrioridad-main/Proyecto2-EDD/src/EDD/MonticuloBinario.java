@@ -180,7 +180,6 @@ public class MonticuloBinario {
     public void visualizarMonticulo() {
         SwingUtilities.invokeLater(() -> {
             mxGraph graph = new mxGraph() {
-                // Desactivar la interacción del ratón
                 public boolean isCellMovable(Object cell) {
                     return true;
                 }
@@ -200,7 +199,6 @@ public class MonticuloBinario {
             }
 
             mxGraphComponent graphComponent = new mxGraphComponent(graph) {
-                // Desactivar la interacción del ratón
                 public boolean isForceMarqueeEvent(MouseEvent e) {
                     return false;
                 }
@@ -264,11 +262,9 @@ public class MonticuloBinario {
                 int ejeXPadre = (int) graph.getCellGeometry(vertices[padreIndice]).getCenterX();
 
                 if (obtenerHijoIzquierdo(padreIndice) == i) {
-                    // El nodo actual es el hijo izquierdo del padre
-                    
+                   
                     actualX = ejeXPadre - ancho * 2 - ajusteX;
                 } else {
-                    // El nodo actual es el hijo derecho del padre
                     int anchoPadre = (int) graph.getCellGeometry(vertices[padreIndice]).getWidth();
                     ajusteX = (ajusteX / 2) + 8;
                     actualX = ejeXPadre - anchoPadre + ancho * 2 + ajusteX;
