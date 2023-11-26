@@ -169,24 +169,7 @@ public class HashTable {
         }
     }
 
-    public void imprimir_hashtable() {
-        if (this.getNum_usuarios() == 0) {
-            System.out.println("La base de usuarios esta vacia");
-        } else {
-            System.out.println("Lista de usuarios");
-            for (int i = 0; i < getTamaño(); i++) {
-                if (getArreglo()[i] != null) {
-                    System.out.println(getArreglo()[i].getNombre() + i);
-                    Usuario aux = getArreglo()[i].getpSig();
-                    while (aux != null) {
-                        System.out.println(aux.getNombre() + i);
-                        aux = aux.getpSig();
-                    }
-                }
-            }
-        }
 
-    }
     /**
     * Imprime la lista de usuarios en la tabla de dispersión.
     * @author S. Estefania, G. Angelo y S. Jose
