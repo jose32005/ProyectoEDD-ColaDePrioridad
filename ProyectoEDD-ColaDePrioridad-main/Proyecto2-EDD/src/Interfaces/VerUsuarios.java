@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
@@ -11,13 +11,17 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author evaas
+ * @author S. Estefania, G. Angelo y S. Jose
  */
 public class VerUsuarios extends javax.swing.JFrame {
 
     /**
-     * Creates new form VerUsuarios
-     */
+    * Constructor de la ventana "VerUsuarios". Inicializa los componentes gráficos y configura la posición
+    * de la ventana en el centro de la pantalla. Llena el desplegable de usuarios con los nombres de usuarios
+    * disponibles en la base de datos.
+    *
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     public VerUsuarios() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -113,7 +117,14 @@ public class VerUsuarios extends javax.swing.JFrame {
         main.ventana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_CerrarActionPerformed
-
+    
+    /**
+    * Maneja el evento de clic en el botón "Buscar". Obtiene el usuario seleccionado en el desplegable,
+    * busca la lista de documentos del usuario y actualiza la tabla de documentos, mostrando información
+    * como nombre, tamaño, tipo y la indicación de si el documento está en cola de impresión.
+    *
+    * @param evt Objeto que contiene información sobre el evento de acción.
+    */
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
 
         DefaultTableModel modelo = (DefaultTableModel) TablaDocs.getModel();
