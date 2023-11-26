@@ -10,13 +10,16 @@ import Ejecutable.main;
 
 /**
  *
- * @author evaas
+ * @author S. Estefania, G. Angelo y S. Jose
  */
 public class EliminarDocumento extends javax.swing.JFrame {
 
     /**
-     * Creates new form EliminarDocumento
-     */
+    * Constructor de la clase EliminarDocumento. Inicializa los componentes de la interfaz
+    * y establece la ubicación relativa de la ventana en el centro de la pantalla. Llena el
+    * desplegable de usuarios con los nombres de los usuarios existentes en la tabla hash.
+    * Si no hay usuarios, imprime un mensaje en la consola.
+    */
     public EliminarDocumento() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -117,6 +120,16 @@ public class EliminarDocumento extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Maneja el evento de eliminación de un documento. Obtiene el nombre del usuario seleccionado
+    * en el desplegable, busca el usuario correspondiente en la tabla hash y elimina el documento
+    * seleccionado del desplegable de documentos asociados a ese usuario. Luego, vuelve a mostrar
+    * la ventana principal y cierra la ventana actual.
+    *
+    * @param evt Objeto de evento que representa la acción de eliminación.
+    *
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
         String usuario = Usuarios.getSelectedItem().toString();
         Usuario actual = main.hashtable.buscarUsuario(usuario);
@@ -135,6 +148,16 @@ public class EliminarDocumento extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_UsuariosActionPerformed
 
+    /**
+    * Maneja el evento del botón que actualiza la lista de documentos disponibles para eliminar.
+    * Obtiene el nombre del usuario seleccionado en el desplegable, busca el usuario correspondiente
+    * en la tabla hash y actualiza la lista de documentos asociados a ese usuario. Luego, limpia el
+    * desplegable de documentos y agrega los documentos disponibles para eliminar (con tiempo igual a -1).
+    *
+    * @param evt Objeto de evento que representa la acción del botón de actualización.
+    *
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String usuario = Usuarios.getSelectedItem().toString();
         Usuario actual = main.hashtable.buscarUsuario(usuario);
