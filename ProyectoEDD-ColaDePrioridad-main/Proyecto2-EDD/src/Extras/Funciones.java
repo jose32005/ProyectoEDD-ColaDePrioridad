@@ -14,12 +14,14 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-/**
- *
- * @author joses
- */
-public class Funciones {
 
+public class Funciones {
+    /**
+    * Abre un archivo CSV seleccionado mediante un diálogo de selección de archivos,
+    * lee su contenido y lo carga en un área de texto.
+    *
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     public void abrir_archivo() {
         String aux = "";
         String texto = "";
