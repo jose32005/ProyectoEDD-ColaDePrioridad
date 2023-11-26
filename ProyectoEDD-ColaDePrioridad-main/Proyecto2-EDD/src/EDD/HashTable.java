@@ -12,27 +12,51 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author joses
- */
+* La clase HashTable representa una tabla de dispersión utilizada para almacenar
+* y gestionar objetos de la clase Usuario.
+* 
+* @param n El tamaño inicial de la tabla de dispersión, que se duplicará para mejorar
+* la eficiencia y reducir colisiones.
+* @author S. Estefania, G. Angelo y S. Jose
+*/
 public class HashTable {
 
     public Usuario[] arreglo;
     private int tamaño;
     private int num_usuarios;
-
+    
+    /**
+     * Constructor de la clase HashTable.
+     * 
+     * @param n El tamaño inicial de la tabla de dispersión.
+     * @author S. Estefania, G. Angelo y S. Jose
+     */
     public HashTable(int n) {
         arreglo = new Usuario[n * 2];
         tamaño = n * 2;
         num_usuarios = 0;
     }
 
-    // n = tamano del arreglo
-    // i =  indice del arreglo
+    /**
+    * Verifica si el espacio en la posición especificada en el arreglo de la tabla de dispersión
+    * está vacío, es decir, si no contiene un objeto Usuario.
+    * 
+    * @param i La posición en el arreglo que se desea verificar.
+    * @return true si el espacio está vacío, false en caso contrario.
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     public boolean EsEspacioVacio(int i) {
         return this.getArreglo()[i] == null;
     }
 
+    /**
+    * Calcula el índice de dispersión para un nombre dado utilizando la suma de los
+    * valores ASCII de los caracteres del nombre.
+    * 
+    * @param nombre El nombre para el cual se calculará el índice de dispersión.
+    * @return El índice de dispersión calculado.
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     public int funHash(String nombre) {
         int indice = 0;
         for (int i = 0; i < nombre.length(); i++) {
@@ -42,6 +66,15 @@ public class HashTable {
         return indice;
     }
 
+    /**
+    * Inserta un nuevo usuario en la tabla de dispersión utilizando el método de doble hashing
+    * para manejar colisiones. Verifica si el usuario ya existe antes de realizar la inserción.
+    * 
+    * @param nombre El nombre del nuevo usuario.
+    * @param tipo El tipo de usuario.
+    * @param nuevo Si el usuario ya se encuentra en el hash.
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     public void InsertarUsuario(String nombre, String tipo, boolean nuevo) {
         nuevo = nuevo;
         Usuario nuevo_usuario = new Usuario(nombre, tipo);
@@ -80,6 +113,12 @@ public class HashTable {
         
     }
 
+    /**
+    * Elimina un usuario de la tabla de dispersión basándose en su nombre.
+    * 
+    * @param nombre El nombre del usuario que se desea eliminar.
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     public void EliminarUsuario(String nombre) {
         int i = this.funHash(nombre);
         Usuario aux = getArreglo()[i];
@@ -107,6 +146,12 @@ public class HashTable {
 
     }
 
+    /**
+    * Busca un usuario en la tabla de dispersión basándose en su nombre.
+    * 
+    * @param nombre El nombre del usuario que se desea buscar.
+    * @return El objeto Usuario si se encuentra, o null si no se encuentra.
+    */
     public Usuario buscarUsuario(String nombre) {
         if (getArreglo()[this.funHash(nombre)] != null) {
             Usuario usuario = getArreglo()[this.funHash(nombre)];
@@ -129,6 +174,12 @@ public class HashTable {
 
     }
 
+    /**
+    * Lee el contenido de un archivo CSV que contiene información de usuarios y
+    * los inserta en la tabla de dispersión.
+    * 
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     public void leer_db() throws IOException {
         String line;
         String usuarios = "";
