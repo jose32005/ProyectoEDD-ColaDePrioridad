@@ -8,8 +8,9 @@ import Ejecutable.main;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author joses
+ * La clase usuario representa aun usuario del sistema
+ * 
+ * @author S. Estefania, G. Angelo y S. Jose
  */
 public class Usuario {
 
@@ -19,6 +20,13 @@ public class Usuario {
     private int iN;
     private Usuario pSig;
 
+    /**
+    * Constructor de la clase Usuario.
+    * 
+    * @param nombre El nombre del usuario.
+    * @param tipo   El tipo de usuario.
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     public Usuario(String nombre, String tipo) {
         this.nombre = nombre;
         this.tipo = tipo;
