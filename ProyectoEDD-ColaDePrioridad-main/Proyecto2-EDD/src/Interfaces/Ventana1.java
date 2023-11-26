@@ -211,7 +211,6 @@ public class Ventana1 extends javax.swing.JFrame {
 
     private void ColaSecuenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColaSecuenciaActionPerformed
         main.monticulo.visualizarGrafo();
-        //V5.setVisible(true);
     }//GEN-LAST:event_ColaSecuenciaActionPerformed
 
     private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed

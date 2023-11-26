@@ -52,7 +52,7 @@ public class CrearDoc extends javax.swing.JFrame {
         NombrejTextField = new javax.swing.JTextField();
         TTamaño = new javax.swing.JLabel();
         TTipo = new javax.swing.JLabel();
-        TipojTextField = new javax.swing.JTextField();
+        Peso = new javax.swing.JTextField();
         Cancelar = new javax.swing.JButton();
         Aceptar = new javax.swing.JButton();
         Titulo = new javax.swing.JLabel();
@@ -96,12 +96,12 @@ public class CrearDoc extends javax.swing.JFrame {
         TTipo.setText("MB");
         jPanel1.add(TTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 220, -1, 30));
 
-        TipojTextField.addActionListener(new java.awt.event.ActionListener() {
+        Peso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TipojTextFieldActionPerformed(evt);
+                PesoActionPerformed(evt);
             }
         });
-        jPanel1.add(TipojTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 80, 30));
+        jPanel1.add(Peso, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 80, 30));
 
         Cancelar.setText("Cancelar");
         Cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -144,9 +144,9 @@ public class CrearDoc extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_UsuariosActionPerformed
 
-    private void TipojTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TipojTextFieldActionPerformed
+    private void PesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PesoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TipojTextFieldActionPerformed
+    }//GEN-LAST:event_PesoActionPerformed
 
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
         main.ventana.setVisible(true);
@@ -157,7 +157,7 @@ public class CrearDoc extends javax.swing.JFrame {
         String nombre_usuario = Usuarios.getSelectedItem().toString();
         String nombre_archivo = NombrejTextField.getText();
         String tipo = jComboBox1.getSelectedItem().toString();
-        String peso = NombrejTextField.getText() + " MB";
+        String peso = Peso.getText() + " MB";
         if(nombre_archivo.isEmpty() != true && peso.isEmpty() != true){
             main.hashtable.buscarUsuario(nombre_usuario).insertarDocumento(nombre_archivo, peso, tipo);
         }else{
@@ -214,12 +214,12 @@ public class CrearDoc extends javax.swing.JFrame {
     private javax.swing.JButton Aceptar;
     private javax.swing.JButton Cancelar;
     private javax.swing.JTextField NombrejTextField;
+    private javax.swing.JTextField Peso;
     private javax.swing.JLabel TNombre;
     private javax.swing.JLabel TTamaño;
     private javax.swing.JLabel TTipo;
     private javax.swing.JLabel TTipo1;
     private javax.swing.JLabel TUsuario;
-    private javax.swing.JTextField TipojTextField;
     private javax.swing.JLabel Titulo;
     private javax.swing.JComboBox<String> Usuarios;
     private javax.swing.JComboBox<String> jComboBox1;
