@@ -13,10 +13,13 @@ import Ejecutable.main;
  * @author evaas
  */
 public class EliminarDocCola extends javax.swing.JFrame {
-
+    
     /**
-     * Creates new form EliminarDocCola
-     */
+    * Constructor de la clase EliminarDocCola.
+    * Inicializa los componentes de la interfaz y centra la ventana en la pantalla.
+    * Llena el menú desplegable de usuarios con los usuarios disponibles si la base de usuarios no está vacía.
+    * Si la base de usuarios está vacía, imprime un mensaje en la consola.
+    */
     public EliminarDocCola() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -117,6 +120,14 @@ public class EliminarDocCola extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Método invocado al hacer clic en el botón "Eliminar" en la interfaz EliminarDocCola.
+    * Obtiene el usuario seleccionado y busca el documento seleccionado en la cola de impresión de ese usuario.
+    * Si el documento se encuentra, cancela su impresión en la cola de montículo binario.
+    * Finalmente, vuelve a mostrar la ventana principal y cierra la ventana actual.
+    *
+    * @param evt Evento de acción que desencadena este método.
+    */
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
         String usuario = Usuarios.getSelectedItem().toString();
         Usuario actual = main.hashtable.buscarUsuario(usuario);
@@ -141,11 +152,26 @@ public class EliminarDocCola extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_UsuariosActionPerformed
 
+    /**
+    * Acción realizada al presionar el botón "cerrar" en la interfaz de usuario.
+    *
+    * @param evt El evento de acción que desencadenó esta acción.
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     private void Cancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cancelar1ActionPerformed
         main.ventana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_Cancelar1ActionPerformed
 
+    /**
+    * Método invocado al hacer clic en el botón "Actualizar Documentos" en la interfaz EliminarDocCola.
+    * Obtiene el usuario seleccionado, busca sus documentos en la cola de impresión y actualiza el
+    * contenido del desplegable de documentos en cola. Si no hay documentos en la cola, se vacía el desplegable.
+    *
+    * @param evt Evento de acción que desencadena este método.
+    *
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String usuario = Usuarios.getSelectedItem().toString();
         Usuario actual = main.hashtable.buscarUsuario(usuario);
