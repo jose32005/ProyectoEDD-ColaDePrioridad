@@ -8,7 +8,7 @@ import Ejecutable.main;
 import javax.swing.JOptionPane;
 
 /**
- * La clase usuario representa aun usuario del sistema
+ * La clase usuario representa a un usuario del sistema
  * 
  * @author S. Estefania, G. Angelo y S. Jose
  */
@@ -35,21 +35,46 @@ public class Usuario {
         this.pSig = null;
 
     }
-
+    /**
+    * Verifica si la lista de documentos asociada al usuario está vacía.
+    * 
+    * @return true si la lista de documentos está vacía, false de lo contrario.
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     public boolean esVacio() {
         return this.getpPrim() == null;
     }
 
+    /**
+    * Obtiene el primer documento asociado al usuario.
+    * 
+    * @return El primer documento asociado al usuario o null si no hay documentos.
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     public Documento primerDocumento() {
         return getpPrim();
     }
 
+    /**
+    * Obtiene el primer siguiente documento asociado al usuario.
+    * 
+    * @return El siguiente documento asociado al usuario o null si no hay un documento siguiente.
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     public void proximoDocumento(Documento pValor) {
         if (pValor != null && pValor.getpSig() != null) {
             pValor = pValor.getpSig();
         }
     }
 
+    /**
+    * Inserta un nuevo documento asociado al usuario.
+    * 
+    * @param nombre El nombre del documento.
+    * @param tamaño El tamaño del documento.
+    * @param tipo   El tipo del documento.
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     public void insertarDocumento(String nombre, String tamaño, String tipo) {
         Documento nuevoDocumento = new Documento(nombre, tamaño, tipo);
         if (this.esVacio()) {
@@ -66,6 +91,12 @@ public class Usuario {
                 + "");
     }
 
+    /**
+    * Elimina un documento asociado al usuario por su nombre.
+    * 
+    * @param nombreDoc El nombre del documento a eliminar.
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     public void eliminarDocumento(String nombreDoc) {
         if (getpPrim() == null || nombreDoc == null) {
             System.out.println("flag 1");
@@ -101,6 +132,7 @@ public class Usuario {
 
     /**
      * @return the nombre
+     * @author S. Estefania, G. Angelo y S. Jose
      */
     public String getNombre() {
         return nombre;
@@ -108,6 +140,7 @@ public class Usuario {
 
     /**
      * @param nombre the nombre to set
+     * @author S. Estefania, G. Angelo y S. Jose
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -115,6 +148,7 @@ public class Usuario {
 
     /**
      * @return the tipo
+     * @author S. Estefania, G. Angelo y S. Jose
      */
     public String getTipo() {
         return tipo;
@@ -122,6 +156,7 @@ public class Usuario {
 
     /**
      * @param tipo the tipo to set
+     * @author S. Estefania, G. Angelo y S. Jose
      */
     public void setTipo(String tipo) {
         this.tipo = tipo;
@@ -129,6 +164,7 @@ public class Usuario {
 
     /**
      * @return the pPrim
+     * @author S. Estefania, G. Angelo y S. Jose
      */
     public Documento getpPrim() {
         return pPrim;
@@ -136,6 +172,7 @@ public class Usuario {
 
     /**
      * @param pPrim the pPrim to set
+     * @author S. Estefania, G. Angelo y S. Jose
      */
     public void setpPrim(Documento pPrim) {
         this.pPrim = pPrim;
@@ -143,6 +180,7 @@ public class Usuario {
 
     /**
      * @return the iN
+     * @author S. Estefania, G. Angelo y S. Jose
      */
     public int getiN() {
         return iN;
@@ -150,6 +188,7 @@ public class Usuario {
 
     /**
      * @param iN the iN to set
+     * @author S. Estefania, G. Angelo y S. Jose
      */
     public void setiN(int iN) {
         this.iN = iN;
@@ -157,6 +196,7 @@ public class Usuario {
 
     /**
      * @return the pSig
+     * @author S. Estefania, G. Angelo y S. Jose
      */
     public Usuario getpSig() {
         return pSig;
@@ -164,9 +204,9 @@ public class Usuario {
 
     /**
      * @param pSig the pSig to set
+     * @author S. Estefania, G. Angelo y S. Jose
      */
     public void setpSig(Usuario pSig) {
         this.pSig = pSig;
     }
-
 }
