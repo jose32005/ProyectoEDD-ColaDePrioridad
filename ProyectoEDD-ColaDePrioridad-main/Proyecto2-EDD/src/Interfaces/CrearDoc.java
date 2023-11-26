@@ -10,13 +10,18 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author evaas
+ * @author S. Estefania, G. Angelo y S. Jose
  */
 public class CrearDoc extends javax.swing.JFrame {
 
     /**
-     * Creates new form CrearDoc
-     */
+    * Constructor de la clase CrearDoc.
+    * Inicializa los componentes de la interfaz, centra la ventana en la pantalla,
+    * y llena el menú desplegable de usuarios si la base de usuarios no está vacía.
+    * Si la base de usuarios está vacía, imprime un mensaje en la consola.
+    *
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     public CrearDoc() {
         initComponents();
         this.setLocationRelativeTo(null);
