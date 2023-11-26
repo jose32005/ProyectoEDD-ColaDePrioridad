@@ -9,7 +9,7 @@ import Ejecutable.main;
 
 /**
  *
- * @author evaas
+ * @author S. Estefania, G. Angelo y S. Jose
  */
 public class AgregarUsuario extends javax.swing.JFrame {
 
