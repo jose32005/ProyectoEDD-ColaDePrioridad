@@ -103,12 +103,25 @@ public class AgregarUsuario extends javax.swing.JFrame {
     private void UsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsuarioActionPerformed
        
     }//GEN-LAST:event_UsuarioActionPerformed
-
+    
+    /**
+    * Acción realizada al presionar el botón "Cancelar".
+    *
+    * @param evt El evento de acción que desencadenó esta acción.
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
         main.ventana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_CancelarActionPerformed
 
+    /**
+    * Acción realizada al presionar el botón "Aceptar" en la interfaz de usuario.
+    * Obtiene el nombre de usuario y la prioridad seleccionada, luego inserta el usuario en la tabla hash.
+    *
+    * @param evt El evento de acción que desencadenó esta acción.
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     private void AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarActionPerformed
         String nombre = Usuario.getText();
         String prioridad = Prioridades.getSelectedItem().toString();
