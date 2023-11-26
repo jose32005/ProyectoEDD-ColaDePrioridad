@@ -6,7 +6,6 @@ package Ejecutable;
 
 import EDD.HashTable;
 import EDD.MonticuloBinario;
-import EDD.Usuario;
 import Extras.Funciones;
 import Interfaces.Ventana1;
 import java.io.IOException;
@@ -29,9 +28,6 @@ public class main {
         hashtable = new HashTable(20);
         monticulo = new MonticuloBinario();
         func = new Funciones();
-        func.abrir_archivo();
-        hashtable.leer_db();
-        hashtable.imprimir_hashtable();
         ventana = new Ventana1();
         ventana.setLocationRelativeTo(null);
         ventana.setVisible(true);
