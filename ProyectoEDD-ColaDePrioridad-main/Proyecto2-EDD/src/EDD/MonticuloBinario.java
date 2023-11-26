@@ -20,6 +20,7 @@ import org.graphstream.ui.view.Viewer;
 * La clase MonticuloBinario representa una cola de prioridad.
 * Cada elemento en la cola es un documento.
 * La clase también incluye un atributo de tipo SingleGraph.
+*
 * @author S. Estefania, G. Angelo y S. Jose
 */
 public class MonticuloBinario {
@@ -34,6 +35,7 @@ public class MonticuloBinario {
     * Constructor de la clase MonticuloBinario.
     * Inicializa la capacidad, tamaño y el arreglo del montículo.
     * Inicializa el tiempo inicial y crea un nuevo grafo para la visualización.
+    * 
     * @author S. Estefania, G. Angelo y S. Jose
     */
     public MonticuloBinario() {
