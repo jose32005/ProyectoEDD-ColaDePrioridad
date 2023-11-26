@@ -77,18 +77,34 @@ public class Usuario {
     */
     public void insertarDocumento(String nombre, String tamaño, String tipo) {
         Documento nuevoDocumento = new Documento(nombre, tamaño, tipo);
+        boolean existe = false;
+
         if (this.esVacio()) {
             this.setpPrim(nuevoDocumento);
         } else {
             Documento pAux = this.getpPrim();
-            while (pAux.getpSig() != null) {
-                pAux = pAux.getpSig();
+            if (pAux.getNombre().equals(nombre)) {
+                existe = true;
+            } else {
+                while (pAux.getpSig() != null) {
+                    if (pAux.getNombre().equals(nombre)) {
+                        System.out.println("flag");
+                        existe = true;
+                        break;
+                    }
+                    pAux = pAux.getpSig();
+                }
             }
-            pAux.setpSig(nuevoDocumento);
+            if (existe == false) {
+                pAux.setpSig(nuevoDocumento);
+                this.setiN(this.getiN() + 1);
+                JOptionPane.showMessageDialog(main.ventana, "Documento: " + nombre + " creado con exito" + "");
+            } else {
+                JOptionPane.showMessageDialog(main.ventana, "El usuario ya tiene un documento bajo ese nombre");
+            }
+
         }
-        this.setiN(this.getiN() + 1);
-        JOptionPane.showMessageDialog(main.ventana, "Documento: " + nombre + " creado con exito"
-                + "");
+
     }
 
     /**
