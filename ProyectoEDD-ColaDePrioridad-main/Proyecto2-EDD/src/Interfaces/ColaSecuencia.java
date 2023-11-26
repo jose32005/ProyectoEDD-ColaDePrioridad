@@ -54,7 +54,13 @@ public class ColaSecuencia extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+    * Acción realizada al presionar el botón "cerrar" en la interfaz de usuario.
+    *
+    * @param evt El evento de acción que desencadenó esta acción.
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
         this.dispose();
     }//GEN-LAST:event_CerrarActionPerformed
