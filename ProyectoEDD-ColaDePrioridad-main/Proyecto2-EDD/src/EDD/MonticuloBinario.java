@@ -18,12 +18,15 @@ public class MonticuloBinario {
     private int capacidad;
     private int tamaño;
     private int tInicial;
+    private final SingleGraph graph;
 
     public MonticuloBinario() {
         this.capacidad = 31;
         this.tamaño = 0;
         this.monticulo = new Documento[31];
         this.tInicial = (int) (System.nanoTime() / 1000000000);
+        this.graph = new SingleGraph("ColaVisualizada");
+
     }
 
     public int obtenerPadre(int i) {
@@ -129,7 +132,7 @@ public class MonticuloBinario {
 
             graph.getModel().beginUpdate();
             try {
-                dibujarMonticulo(graph, parent, 270, 100, 30, 30);
+                dibujarMonticulo(graph, parent, 300, 100, 20, 20);
             } finally {
                 graph.getModel().endUpdate();
             }
@@ -140,9 +143,9 @@ public class MonticuloBinario {
                     return false;
                 }
             };
-            JFrame frame = new JFrame("Visualizador de Montículo Binario");
+            JFrame frame = new JFrame("Montículo Binario Como Arbol");
             frame.getContentPane().add(graphComponent);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
             // Ajustes para el tamaño de la ventana
             frame.setSize(900, 900);
@@ -155,22 +158,28 @@ public class MonticuloBinario {
 
     private void dibujarMonticulo(mxGraph graph, Object parent, int x, int y, int ancho, int alto) {
         graph.setCellsSelectable(true);
+        graph.setCellsDisconnectable(false);
         graph.setConnectableEdges(false);
+        graph.setEdgeLabelsMovable(false);
+        
         int nivel = 1;
         int nivelAnterior = 0;
         int yOffset = alto * 2;
 
         Object[] vertices = new Object[tamaño];
 
-        int anchoVentana = 900; 
-        int anchoMonticulo = tamaño * (ancho * 2); 
+        int anchoVentana = 900;
+        int anchoMonticulo = tamaño * (ancho * 2);
 
         int ajusteX = (anchoVentana - anchoMonticulo) / 2;
+
+        String estiloNodo = "rounded=1; shadow=1; fontSize=12; fontColor=#000000;";
+        Color[] paletaColores = {Color.PINK, Color.BLUE, Color.GREEN, Color.YELLOW, Color.WHITE};  // Puedes ajustar la paleta de colores
 
         for (int i = 0; i < tamaño; i++) {
             int actualX;
             int actualY;
-
+            Color colorAleatorio = obtenerColorAleatorio(paletaColores, nivel);
             if (i == 0) {
                 actualX = x + ajusteX;
                 actualY = y;
@@ -183,18 +192,19 @@ public class MonticuloBinario {
 
                 if (obtenerHijoIzquierdo(padreIndice) == i) {
                     // El nodo actual es el hijo izquierdo del padre
+                    
                     actualX = ejeXPadre - ancho * 2 - ajusteX;
                 } else {
                     // El nodo actual es el hijo derecho del padre
                     int anchoPadre = (int) graph.getCellGeometry(vertices[padreIndice]).getWidth();
-                    ajusteX /= 2;
+                    ajusteX = (ajusteX / 2) + 8;
                     actualX = ejeXPadre - anchoPadre + ancho * 2 + ajusteX;
                 }
                 actualY = y + nivel * yOffset;
-                
+
             }
 
-            vertices[i] = graph.insertVertex(parent, null, monticulo[i].getNombre(),actualX, actualY, ancho, alto);
+            vertices[i] = graph.insertVertex(parent, null, monticulo[i].getNombre(), actualX, actualY, ancho, alto, estiloNodo + "fillColor=" + convertirColorAHexadecimal(colorAleatorio) + ";");
 
             if (i != 0) {
                 int padreIndice = obtenerPadre(i);
@@ -206,7 +216,61 @@ public class MonticuloBinario {
             }
         }
     }
+    private Color obtenerColorAleatorio(Color[] paletaColores, int nivel) {
+        Random rand = new Random(nivel);  // Fija la semilla para obtener el mismo color para el mismo nivel
+        return paletaColores[rand.nextInt(paletaColores.length)];
+    }
 
+
+    private String convertirColorAHexadecimal(Color color) {
+        return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
+    }
+
+    public void cargarColaEnGrafo() {
+        graph.clear();  // Limpia el grafo antes de recargar
+
+        // Constante para el espacio horizontal entre nodos
+        final double espacioHorizontal = 10.0;
+
+        // Recorre los nodos del montículo y agrégales al grafo
+        for (int i = 0; i < tamaño; i++) {
+            Documento documento = monticulo[i];
+            Node nodo = graph.addNode(Integer.toString(i));
+
+            // Establece la posición x de cada nodo para organizarlos horizontalmente
+            double posX = i * espacioHorizontal;
+            nodo.setAttribute("xyz", posX, 0.0, 0.0);  // xyz son las coordenadas en GraphStream
+            nodo.setAttribute("label", documento.getNombre());
+        }
+
+        // Conecta los nodos según la estructura del montículo binario
+        for (int i = 0; i < tamaño; i++) {
+            int izquierdo = obtenerHijoIzquierdo(i);
+            int derecho = obtenerHijoDerecho(i);
+
+            if (izquierdo < tamaño) {
+                graph.addEdge("Edge_" + i + "_" + izquierdo, Integer.toString(i), Integer.toString(izquierdo));
+            }
+
+            if (derecho < tamaño) {
+                graph.addEdge("Edge_" + i + "_" + derecho, Integer.toString(i), Integer.toString(derecho));
+            }
+        }
+        graph.setAttribute("ui.quality");
+        graph.setAttribute("ui.stylesheet", "node { shape: box; size-mode: fit; fill-color: lightblue; text-size: 25; text-font: 'Verdana'; }");
+
+    }
+
+    public void visualizarGrafo() {
+        cargarColaEnGrafo();
+        Viewer viewer = graph.display();
+        viewer.getDefaultView().enableMouseOptions();
+
+        viewer.disableAutoLayout();
+    }
+    
+
+    
     public void cancelarImpresion(Documento doc) {
         if (doc.getTiempo() != -1) {
             doc.setTiempo(0);
