@@ -11,13 +11,18 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author evaas
+ * @author S. Estefania, G. Angelo y S. Jose
  */
 public class InsertarDocCola extends javax.swing.JFrame {
 
     /**
-     * Creates new form EliminarDocCola
-     */
+    * Constructor de la ventana para insertar documentos en la cola de impresión.
+    * Inicializa los componentes gráficos y ubica la ventana en el centro de la pantalla.
+    * Si la base de usuarios no está vacía, llena el desplegable de usuarios con los nombres
+    * de los usuarios disponibles en la tabla hash.
+    *
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     public InsertarDocCola() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -118,6 +123,15 @@ public class InsertarDocCola extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Maneja el evento de clic en el botón "Enviar". Obtiene el usuario y el documento seleccionados
+    * en los desplegables, busca el documento en la lista de documentos del usuario y lo inserta en la
+    * cola de impresión mediante el montículo binario. Muestra un mensaje informativo y cierra la ventana.
+    *
+    * @param evt Objeto que contiene información sobre el evento de acción.
+    *
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     private void EnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnviarActionPerformed
         String usuario = Usuarios.getSelectedItem().toString();
         Usuario actual = main.hashtable.buscarUsuario(usuario);
@@ -148,6 +162,15 @@ public class InsertarDocCola extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_Cancelar1ActionPerformed
 
+    /**
+    * Maneja el evento de clic en el botón "jButton1". Obtiene el usuario seleccionado en el desplegable,
+    * busca la lista de documentos del usuario y actualiza el desplegable de documentos, removiendo aquellos
+    * documentos que ya han sido impresos (tiempo igual a -1). Si el usuario no tiene documentos, limpia
+    * completamente el desplegable de documentos.
+    *
+    * @param evt Objeto que contiene información sobre el evento de acción.
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String usuario = Usuarios.getSelectedItem().toString();
         Usuario actual = main.hashtable.buscarUsuario(usuario);
