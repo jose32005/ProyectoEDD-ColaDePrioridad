@@ -316,6 +316,22 @@ public class MonticuloBinario {
     }
 
     /**
+    * Muestra en una nueva ventana la cola de impresion
+    * como estructura lineal
+    *
+    * @param indice Índice del nodo actual en el montículo.
+    * @author S. Estefania, G. Angelo y S. Jose
+    */
+    
+    public void visualizarGrafo() {
+        cargarColaEnGrafo();
+        Viewer viewer = graph.display();
+        viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.HIDE_ONLY);
+        viewer.getDefaultView().enableMouseOptions();
+        viewer.disableAutoLayout();
+    }
+
+    /**
     * Realiza la operación de mantenimiento del montículo después de la eliminación
     * del mínimo. Compara el nodo actual con sus hijos y realiza intercambios según
     * sea necesario para restaurar la propiedad del montículo.
